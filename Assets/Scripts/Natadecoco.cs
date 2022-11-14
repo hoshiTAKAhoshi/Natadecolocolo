@@ -77,6 +77,8 @@ public class Natadecoco : MonoBehaviour
 
     private float m_goal_rot_y = 0.0f;                  // ゴール時の回転
     private float m_goal_hight = 0.0f;
+    private float m_goal_pru_time = 0.0f;
+    private float m_goal_pru_amplitude = 0.02f;
     private StageMgr m_stage_mgr;
 
     // Start is called before the first frame update
@@ -322,9 +324,9 @@ public class Natadecoco : MonoBehaviour
         //transform.position = new Vector3(m_fixed_pos.x + m_to_pos.x + m_to_pos.x * (0.70710678f * Mathf.Cos(Mathf.Deg2Rad * (135 - Mathf.Abs(m_rot.z))) - 0.5f), hight, m_fixed_pos.z + m_to_pos.z + m_to_pos.z * (0.70710678f * Mathf.Cos(Mathf.Deg2Rad * (135 - Mathf.Abs(m_rot.x))) - 0.5f));
         transform.position = new Vector3
             (
-            m_pos_on_field.x + m_to_pos.x + m_to_pos.x * (0.70710678f * Mathf.Cos(Mathf.Deg2Rad * (135 - Mathf.Abs(m_rot.z))) - 0.5f),
+            m_pos_on_field.x + m_to_pos.x + m_to_pos.x * (0.70710678f * Mathf.Cos(Mathf.Deg2Rad * (135 - Mathf.Abs(m_rot.z))) - 0.5f) + m_goal_pru_amplitude*Mathf.Sin(m_goal_pru_time),
             hight,
-            -m_pos_on_field.y - m_to_pos.y - m_to_pos.y * (0.70710678f * Mathf.Cos(Mathf.Deg2Rad * (135 - Mathf.Abs(m_rot.x))) - 0.5f)
+            -m_pos_on_field.y - m_to_pos.y - m_to_pos.y * (0.70710678f * Mathf.Cos(Mathf.Deg2Rad * (135 - Mathf.Abs(m_rot.x))) - 0.5f) + m_goal_pru_amplitude * Mathf.Sin(m_goal_pru_time)
             );
     }
 
@@ -511,19 +513,24 @@ public class Natadecoco : MonoBehaviour
     {
         //DOTween.To(() => m_pru_time, (x) => m_pru_time = x, period * Mathf.PI, time).SetEase(Ease.Linear);
 
-        DOTween.To(() => m_rot.y, (x) => m_rot.y = x, m_rot.y + 360.0f, 1.5f).SetEase(Ease.OutQuint).OnComplete(() => { PlayGoalJumpAnim(); });
+        DOTween.To(() => m_rot.y, (x) => m_rot.y = x, m_rot.y + 360.0f, 1.5f).SetEase(Ease.OutQuint);
         // つぶす
         Vector3 up_vec = Vector3.up;
         up_vec = transform.rotation * up_vec;
-        Ease curve = Ease.InOutSine;
+        Ease curve = Ease.OutSine;
+        float ease_time = 1.5f;
+        float delay_time = 0.4f;
         float yoko = 1.15f;
         float tate = 0.7f;
         float sx = yoko - Mathf.Abs(up_vec.x) * (yoko - tate);
         float sy = yoko - Mathf.Abs(up_vec.y) * (yoko - tate);
         float sz = yoko - Mathf.Abs(up_vec.z) * (yoko - tate);
-        transform.DOScale(new Vector3(sx, sy, sz), 1.5f).SetEase(curve);
+        transform.DOScale(new Vector3(sx, sy, sz), ease_time).SetEase(curve).SetDelay(delay_time).OnComplete(() => { PlayGoalJumpAnim(); });
         // つぶした分だけ下げる
-        DOTween.To(() => m_goal_hight, (x) => m_goal_hight = x, -(1.0f-tate)/2, 1.5f).SetEase(curve);
+        DOTween.To(() => m_goal_hight, (x) => m_goal_hight = x, -(1.0f-tate)/2, ease_time).SetEase(curve).SetDelay(delay_time);
+        DOTween.To(() => m_goal_pru_time, (x) => m_goal_pru_time = x, 16 * Mathf.PI, ease_time).SetEase(Ease.InSine).SetDelay(delay_time);
+        m_goal_pru_amplitude = 0.0f;
+        DOTween.To(() => m_goal_pru_amplitude, (x) => m_goal_pru_amplitude = x, 0.015f, ease_time).SetEase(Ease.OutSine).SetDelay(delay_time);
 
         //transform.DOLocalRotate(new Vector3(0.0f, 360.0f, 0.0f), 0.8f);
     }
