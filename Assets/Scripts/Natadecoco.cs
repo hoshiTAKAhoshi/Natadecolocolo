@@ -512,6 +512,19 @@ public class Natadecoco : MonoBehaviour
         //DOTween.To(() => m_pru_time, (x) => m_pru_time = x, period * Mathf.PI, time).SetEase(Ease.Linear);
 
         DOTween.To(() => m_rot.y, (x) => m_rot.y = x, m_rot.y + 360.0f, 1.5f).SetEase(Ease.OutQuint).OnComplete(() => { PlayGoalJumpAnim(); });
+        // つぶす
+        Vector3 up_vec = Vector3.up;
+        up_vec = transform.rotation * up_vec;
+        Ease curve = Ease.InOutSine;
+        float yoko = 1.15f;
+        float tate = 0.7f;
+        float sx = yoko - Mathf.Abs(up_vec.x) * (yoko - tate);
+        float sy = yoko - Mathf.Abs(up_vec.y) * (yoko - tate);
+        float sz = yoko - Mathf.Abs(up_vec.z) * (yoko - tate);
+        transform.DOScale(new Vector3(sx, sy, sz), 1.5f).SetEase(curve);
+        // つぶした分だけ下げる
+        DOTween.To(() => m_goal_hight, (x) => m_goal_hight = x, -(1.0f-tate)/2, 1.5f).SetEase(curve);
+
         //transform.DOLocalRotate(new Vector3(0.0f, 360.0f, 0.0f), 0.8f);
     }
 
