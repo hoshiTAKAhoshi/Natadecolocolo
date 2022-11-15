@@ -530,7 +530,7 @@ public class Natadecoco : MonoBehaviour
         DOTween.To(() => m_goal_hight, (x) => m_goal_hight = x, -(1.0f-tate)/2, ease_time).SetEase(curve).SetDelay(delay_time);
         DOTween.To(() => m_goal_pru_time, (x) => m_goal_pru_time = x, 16 * Mathf.PI, ease_time).SetEase(Ease.InSine).SetDelay(delay_time);
         m_goal_pru_amplitude = 0.0f;
-        DOTween.To(() => m_goal_pru_amplitude, (x) => m_goal_pru_amplitude = x, 0.015f, ease_time).SetEase(Ease.OutSine).SetDelay(delay_time);
+        DOTween.To(() => m_goal_pru_amplitude, (x) => m_goal_pru_amplitude = x, 0.01f, ease_time).SetEase(Ease.InSine).SetDelay(delay_time);
 
         //transform.DOLocalRotate(new Vector3(0.0f, 360.0f, 0.0f), 0.8f);
     }
