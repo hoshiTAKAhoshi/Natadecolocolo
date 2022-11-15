@@ -29,7 +29,7 @@ public class StageMgr : MonoBehaviour
     {
         Physics.gravity = new Vector3(0.0f, -24.0f, 0.0f);
         CreateStage(0);
-        Debug.Log(UnityEditorInternal.InternalEditorUtility.unityPreferencesFolder);
+        //Debug.Log(UnityEditorInternal.InternalEditorUtility.unityPreferencesFolder);
     }
 
     // Update is called once per frame

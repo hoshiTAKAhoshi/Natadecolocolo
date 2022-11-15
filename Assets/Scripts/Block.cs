@@ -36,7 +36,7 @@ public class Block : StageObjectBase
 
     public void Break()
     {
-        Debug.Log("Block Break");
+        //Debug.Log("Block Break");
         Destroy(gameObject);
         // 破片
         int[] num_shuffle = { 0, 1, 2, 3, 4, 5, 6, 7 };

@@ -145,7 +145,7 @@ public class Tama : StageObjectBase
 
     public void SetStageMgr(StageMgr stage_mgr)
     {
-        Debug.Log("Set Stage Mgr");
+        //Debug.Log("Set Stage Mgr");
         m_stage_mgr = stage_mgr;
     }
 
