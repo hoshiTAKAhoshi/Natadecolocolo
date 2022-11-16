@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class StageMgr : MonoBehaviour
 {
+    [SerializeField] private Camera m_camera;
+
     [SerializeField]
     private StageDataTable m_table = null;
     [SerializeField]
@@ -20,6 +22,7 @@ public class StageMgr : MonoBehaviour
     [SerializeField]
     private Floor m_pref_floor_hole_goal = null;
 
+    private Natadecoco m_ntdcc;
     private List<string> m_floor_data = new List<string>();
     private Dictionary<Vector2Int, Floor> m_floor_list = new Dictionary<Vector2Int, Floor>();
     private List<string> m_object_data = new List<string>();
@@ -55,11 +58,11 @@ public class StageMgr : MonoBehaviour
                     switch (data)
                     {
                         case "S":
-                            Natadecoco obj = Instantiate(m_pref_ntdcc, new Vector3((int)(x / 2), 0.0f, -y), Quaternion.identity);
-                            obj.SetPos(new Vector2Int((int)(x / 2), -y));
-                            obj.InitNose(stage_data.nose_dire);
-                            obj.SetStageMgr(this);
-                            obj.transform.parent = this.transform;
+                            m_ntdcc = Instantiate(m_pref_ntdcc, new Vector3((int)(x / 2), 0.0f, -y), Quaternion.identity);
+                            m_ntdcc.SetPos(new Vector2Int((int)(x / 2), -y));
+                            m_ntdcc.InitNose(stage_data.nose_dire);
+                            m_ntdcc.SetStageMgr(this);
+                            m_ntdcc.transform.parent = this.transform;
                             break;
                         case "'":
                             //Debug.Log(new Vector2Int(x / 2, y));
@@ -197,5 +200,16 @@ public class StageMgr : MonoBehaviour
             }
         }
         return 0.0f;
+    }
+
+    public Vector3 GetNtdccPos()
+    {
+        return m_ntdcc.transform.position;
+    }
+
+    public Vector3 GetNtdccScreenPos()
+    {
+        //Debug.Log(m_camera.WorldToScreenPoint(m_ntdcc.transform.position));
+        return m_camera.WorldToScreenPoint(m_ntdcc.transform.position);
     }
 }
