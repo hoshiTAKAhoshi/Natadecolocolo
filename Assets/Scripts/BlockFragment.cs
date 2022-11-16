@@ -69,19 +69,19 @@ public class BlockFragment : MonoBehaviour
         //    m_is_brust = true;
         //}
 
-        if (m_rb.velocity.y < 0 && transform.position.y < -0.5f && m_is_fall == false && m_is_brust == false)
+        if (m_rb.velocity.y < 0 && transform.position.y < -0.9f && m_is_fall == false && m_is_brust == false)
         {
             m_is_fall = true;
             //m_seq_scale.Kill();
             //transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InSine);
-            m_rb.drag = 4.0f;
+            m_rb.drag = 4.5f;
             //m_material = null;
             //m_material = m_rdr.material = new Material(m_brust_material);
 
             //m_transparent_ratio = 0.3f;
             //DOTween.To(() => m_transparent_ratio, (y) => m_transparent_ratio = y, 1.0f, 0.2f).SetEase(Ease.InCubic).OnComplete(() => { Destroy(gameObject); });
             m_seq_scale.Kill();
-            transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InQuint).OnComplete(() => { Destroy(gameObject); });
+            transform.DOScale(Vector3.zero, 0.4f).SetEase(Ease.InQuint).OnComplete(() => { Destroy(gameObject); });
 
         }
 
