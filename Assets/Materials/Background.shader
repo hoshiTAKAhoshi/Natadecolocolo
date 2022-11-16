@@ -2,11 +2,11 @@
 
 Shader "Custom/Background"
 {
-   Properties
+    Properties
     {
         // マテリアルインスペクターの Color プロパティ、デフォルトを白に
         _Color ("Main Color", Color) = (1,1,1,1)
-        _NtdccPos("NtdccPos", Vector) = (0.0, 0.509, 0.0)
+        _NtdccScreenPos("NtdccScreenPos", Vector) = (0.0, 0.509, 0.0)
         _Radius("Radius", float) = 400.0
         _Thickness("Thickness", float) = 20.0
 
@@ -25,11 +25,9 @@ Shader "Custom/Background"
             {
                 float4 vertex : SV_POSITION;
                 float4 screenPos : TEXCOORD1;
-                float4 ntdccPos : TEXCOORD2;
 
             };
 
-            float4 _NtdccPos;
             // 頂点シェーダー
             // 今回は、 "appdata" 構造体の代わりに、入力を手動で書き込みます
             // そして v2f 構造体を返す代わりに、1 つの出力
@@ -39,23 +37,21 @@ Shader "Custom/Background"
                 v2f o;
                 o.vertex = UnityObjectToClipPos(vertex);
                 o.screenPos = ComputeScreenPos(o.vertex)*_ScreenParams;//0~1
-                o.ntdccPos = _NtdccPos;//ComputeScreenPos(_NtdccPos);
                 return o;
             }
             
             // マテリアルからのカラー
             fixed4 _Color;
+            float4 _NtdccScreenPos;
             float _Radius;
             float _Thickness;
             // ピクセルシェーダー、入力不要
             fixed4 frag (v2f i) : SV_Target
             {
-                half2 npos = i.ntdccPos.xy;//-1~1
-                //npos=(npos*2);
-                //npos/=_ScreenParams.xy;
-                //if(i.screenPos.x>=npos.x)
-                //if(i.screenPos.x>=npos.x)
-                if(distance(i.screenPos,npos)>_Radius && distance(i.screenPos,npos)<_Radius+_Thickness)
+                _Radius *= _ScreenParams/100;
+                _Thickness *= _ScreenParams/100;
+                half2 npos = _NtdccScreenPos.xy;
+                if(distance(i.screenPos,npos)>_Radius && distance(i.screenPos,npos)<_Radius +_Thickness)
                     return fixed4(1,1,1,1);
                 else
                     return _Color; // 単に返します

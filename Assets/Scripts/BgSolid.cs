@@ -16,7 +16,7 @@ public class BgSolid : MonoBehaviour
     void Update()
     {
         //Debug.Log(m_stage_mgr.GetNtdccScreenPos());
-        m_material.SetVector("_NtdccPos", m_stage_mgr.GetNtdccScreenPos());
+        m_material.SetVector("_NtdccScreenPos", m_stage_mgr.GetNtdccScreenPos());
         //m_material.SetFloat()
     }
 }
