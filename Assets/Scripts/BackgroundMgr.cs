@@ -12,12 +12,12 @@ public class BackgroundMgr : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        transform.position = Camera.main.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        transform.localScale = Vector3.one * Camera.main.orthographicSize / 2.76f;
     }
 }
