@@ -48,8 +48,8 @@ Shader "Custom/Background"
             // ピクセルシェーダー、入力不要
             fixed4 frag (v2f i) : SV_Target
             {
-                _Radius *= _ScreenParams/100;
-                _Thickness *= _ScreenParams/100;
+                _Radius *= _ScreenParams.y/100;
+                _Thickness *= _ScreenParams.y/100;
                 half2 npos = _NtdccScreenPos.xy;
                 if(distance(i.screenPos,npos)>_Radius && distance(i.screenPos,npos)<_Radius +_Thickness)
                     return fixed4(1,1,1,1);
