@@ -51,7 +51,7 @@ Shader "Custom/Background"
                 _Radius *= _ScreenParams.y/100;
                 _Thickness *= _ScreenParams.y/100;
                 half2 npos = _NtdccScreenPos.xy;
-                if(distance(i.screenPos,npos)>_Radius && distance(i.screenPos,npos)<_Radius +_Thickness)
+                if(distance(i.screenPos,npos)>_Radius - _Thickness && distance(i.screenPos,npos)<_Radius)
                     return fixed4(1,1,1,1);
                 else
                     return _Color; // 単に返します
