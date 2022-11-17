@@ -28,8 +28,8 @@ Material:
     m_Floats:
     - _Glossiness: 0.5
     - _Metallic: 0
-    - _Radius: 9
-    - _Thickness: 1
+    - _Radius: 16
+    - _Thickness: 2
     m_Colors:
     - _Color: {r: 0.3713955, g: 0.7098166, b: 0.735849, a: 1}
     - _NtdccPos: {r: 0, g: 0, b: 0, a: 1}

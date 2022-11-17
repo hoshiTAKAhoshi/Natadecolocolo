@@ -25,9 +25,9 @@ public class Floor : MonoBehaviour
         //Debug.Log("Sinking");
         transform.position = new Vector3(transform.position.x, -0.501f, transform.position.z);
         if(!is_otto)
-            transform.DOLocalMoveY(-0.9f, m_sinking_time).SetEase(m_sinking_curve);
+            transform.DOLocalMoveY(-0.4f, m_sinking_time).SetEase(m_sinking_curve);
         else
-            transform.DOLocalMoveY(-0.7f, m_sinking_time*0.6f).SetEase(m_sinking_curve);
+            transform.DOLocalMoveY(-0.2f, m_sinking_time*0.6f).SetEase(m_sinking_curve);
     }
 
     public float GetSinking()
