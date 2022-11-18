@@ -33,7 +33,7 @@ public class BlockFragment : MonoBehaviour
         m_seq_white.Append(DOTween.To(() => m_white_ratio, (y) => m_white_ratio = y, 0.0f, 0.3f).SetEase(Ease.OutCubic));
 
         m_seq_scale = DOTween.Sequence();
-        m_seq_scale.Append(transform.DOScale(new Vector3(0.33f,0.33f,0.33f), 0.55f).SetEase(m_scale_curve));
+        m_seq_scale.Append(transform.DOScale(new Vector3(0.33f,0.33f,0.33f), 0.52f).SetEase(m_scale_curve));
         //transform.DOScale(Vector3.zero, 0.4f).SetDelay(0.3f + Random.Range(0.0f, 0.3f)).SetEase(Ease.InCubic);
 
     }
@@ -69,7 +69,7 @@ public class BlockFragment : MonoBehaviour
         //    m_is_brust = true;
         //}
 
-        if (m_rb.velocity.y < 0 && transform.position.y < -0.9f && m_is_fall == false && m_is_brust == false)
+        if (m_rb.velocity.y < 0 && transform.position.y < -1.5f && m_is_fall == false && m_is_brust == false)
         {
             m_is_fall = true;
             //m_seq_scale.Kill();
@@ -100,7 +100,7 @@ public class BlockFragment : MonoBehaviour
             m_rb.drag = 15.0f;
             m_rb.angularDrag = 15.0f;
             m_seq_scale.Kill();
-            transform.DOScale(Vector3.zero, 0.35f).SetEase(Ease.InQuad);
+            transform.DOScale(Vector3.zero, 0.35f).SetEase(Ease.InQuad).OnComplete(() => { Destroy(gameObject); });
         }
 
         return;
