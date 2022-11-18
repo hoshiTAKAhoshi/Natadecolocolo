@@ -4,19 +4,26 @@ using UnityEngine;
 
 public class BgSolid : MonoBehaviour
 {
-    [SerializeField] private StageMgr m_stage_mgr;
-    private Material m_material;
+    [SerializeField] protected StageMgr m_stage_mgr;
+    protected Material m_material;
+
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
         m_material = GetComponent<Renderer>().material;
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         //Debug.Log(m_stage_mgr.GetNtdccScreenPos());
         m_material.SetVector("_NtdccScreenPos", m_stage_mgr.GetNtdccScreenPos());
         //m_material.SetFloat()
+        //Debug.Log("SetVector");
+    }
+
+    public void SetStageMgr(StageMgr stage_mgr)
+    {
+        m_stage_mgr = stage_mgr;
     }
 }
