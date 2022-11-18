@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BackgroundMgr : MonoBehaviour
+public class BgMgr : MonoBehaviour
 {
     [SerializeField] private StageMgr m_stage_mgr;
     [SerializeField] private BgSolid m_pref_bg_cube;
