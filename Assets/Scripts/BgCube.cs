@@ -14,10 +14,8 @@ public class BgCube : BgSolid
         float a = 5;
         m_add_rot = new Vector3(Random.Range(-a, a), Random.Range(-a, a), Random.Range(-a, a));
 
-        m_add_y = Random.Range(0.01f, 0.07f);
+        m_add_y = (transform.localScale.x-0.2f) * 0.08f;// Random.Range(0.01f, 0.07f);
 
-        float scale = Random.Range(0.4f, 0.9f);
-        transform.localScale = Vector3.one * scale;
 
         //m_material.color = Color.white;
     }
@@ -40,5 +38,12 @@ public class BgCube : BgSolid
         {
             transform.position += new Vector3(-m_add_y, 0.0f, m_add_y) * Time.deltaTime;
         }
+    }
+
+    public void SetScale(float base_scale)
+    {
+        float scale = Random.Range(base_scale, base_scale+0.2f);
+        transform.localScale = Vector3.one * scale;
+
     }
 }
