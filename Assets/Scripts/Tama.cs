@@ -158,12 +158,13 @@ public class Tama : StageObjectBase
     public void PlayInsideScaleAnim(Vector2Int vec)
     {
         transform.rotation = m_ntdcc.GetRotation();
-        Vector3 local_vec = m_ntdcc.GetRotation() * new Vector3(vec.x, 0, vec.y);
+        //Vector3 local_vec = m_ntdcc.GetRotation() * new Vector3(vec.x, 0, vec.y);
+        Vector3 local_vec = Quaternion.Inverse(transform.rotation) * new Vector3(vec.x, 0, vec.y);
         transform.localScale = new Vector3(
             0.25f + Mathf.Abs(local_vec.x) * 0.2f,
             0.25f + Mathf.Abs(local_vec.y) * 0.2f,
             0.25f + Mathf.Abs(local_vec.z) * 0.2f
-        );
+        ) ;
         transform.position = new Vector3(
             m_pos_on_field.x + (transform.position.x - m_pos_on_field.x) * 0.9f,
             transform.position.y,

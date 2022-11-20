@@ -66,8 +66,8 @@ public class StageDataTable : MonoBehaviour
             // フィールドデータ
             new[]
             {
-                "SQ'QEQEQEQ",
-                " G Q O'Q'Q"
+                "SQ'Q'Q'Q'Q",
+                " G'Q O'Q'Q"
             },
             // 鼻の向き
             new[]
