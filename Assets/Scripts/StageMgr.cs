@@ -7,21 +7,14 @@ public class StageMgr : MonoBehaviour
 {
     [SerializeField] private Camera m_camera;
 
-    [SerializeField]
-    private StageDataTable m_table = null;
-    [SerializeField]
-    private Natadecoco m_pref_ntdcc = null;
-    [SerializeField]
-    private Tama m_pref_tama = null;
-    [SerializeField]
-    private Block m_pref_block = null;
+    [SerializeField] private StageDataTable m_table = null;
+    [SerializeField] private Natadecoco m_pref_ntdcc = null;
+    [SerializeField] private Tama m_pref_tama = null;
+    [SerializeField] private Block m_pref_block = null;
 
-    [SerializeField]
-    private Floor m_pref_floor = null;
-    [SerializeField]
-    private Floor m_pref_floor_hole = null;
-    [SerializeField]
-    private Floor m_pref_floor_hole_goal = null;
+    [SerializeField] private Floor m_pref_floor = null;
+    [SerializeField] private Floor m_pref_floor_hole = null;
+    [SerializeField] private Floor m_pref_floor_hole_goal = null;
 
     private Natadecoco m_ntdcc;
     private List<string> m_floor_data = new List<string>();
