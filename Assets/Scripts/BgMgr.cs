@@ -19,10 +19,10 @@ public class BgMgr : MonoBehaviour
             for (int i = 0; i < m_cube_num_max; i++)
             {
                 float x = ((float)i / m_cube_num_max) * 10 - 5;//Random.Range(-5.0f, 5.0f);
-                float y = Random.Range(-1.0f, 4.0f) + group * 4; ;
+                float y = Random.Range(-1.0f, 4.0f) + group * 5; ;
                 BgCube cube = Instantiate(m_pref_bg_cube, new Vector3(-7.0f + x + y, -12.0f, 7.0f + x - y), Quaternion.Euler(Random.Range(0.0f, 360.0f), Random.Range(0.0f, 360.0f), Random.Range(0.0f, 360.0f)));
                 cube.transform.parent = transform;
-                cube.SetScale((float)(i % 2) * 0.25f + 0.35f);
+                cube.SetScale((float)(i % 2) * 0.2f + 0.35f);
                 cube.SetStageMgr(m_stage_mgr);
                 m_cube_list.Add(cube);
             }
