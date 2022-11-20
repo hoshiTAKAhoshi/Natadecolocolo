@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,6 +28,8 @@ public class StageMgr : MonoBehaviour
     private Dictionary<Vector2Int, Floor> m_floor_list = new Dictionary<Vector2Int, Floor>();
     private List<string> m_object_data = new List<string>();
     private Dictionary<Vector2Int, StageObjectBase> m_object_list = new Dictionary<Vector2Int, StageObjectBase>();
+
+    private float m_time_scale = 1.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -211,5 +214,11 @@ public class StageMgr : MonoBehaviour
     {
         //Debug.Log(m_camera.WorldToScreenPoint(m_ntdcc.transform.position));
         return m_camera.WorldToScreenPoint(m_ntdcc.transform.position);
+    }
+
+    public void PlayGoalTimeAnim()
+    {
+        m_time_scale = 0.8f;
+        DOTween.To(() => m_time_scale, (x) => m_time_scale = x, 1.0f, 0.3f).SetEase(Ease.InCubic).OnUpdate(() => { Time.timeScale = m_time_scale; });
     }
 }

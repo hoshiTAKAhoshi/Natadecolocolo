@@ -79,6 +79,7 @@ public class Natadecoco : MonoBehaviour
     private float m_goal_hight = 0.0f;
     private float m_goal_pru_time = 0.0f;
     private float m_goal_pru_amplitude = 0.02f;
+    [SerializeField] private AnimationCurve m_goal_rot_y_curve;
     private StageMgr m_stage_mgr;
 
     // Start is called before the first frame update
@@ -143,8 +144,6 @@ public class Natadecoco : MonoBehaviour
                     UpdateNoseDire();
                     // 定まった姿勢を保存
                     FixTransform();
-                    // プルプル開始
-                    StartPru();
                     // 床を沈ませる
                     m_stage_mgr.StartFloorSinking(m_pos_on_field, m_is_otto);
                     // 弾があったら弾取得
@@ -159,6 +158,9 @@ public class Natadecoco : MonoBehaviour
                     }
                     else
                     {
+                        // プルプル開始
+                        StartPru();
+
                         // 入力待ち状態に移行
                         m_state = NtdccState.Idol;
                     }
@@ -338,13 +340,16 @@ public class Natadecoco : MonoBehaviour
         if (m_is_otto) m_pru_dir *= -1;
 
         StartPruDOTween(3.5f, 0.9f);
+
+        //Debug.Log("Pru");
     }
 
-    void StartPruDOTween(float period, float time)
+    void StartPruDOTween(float period, float time, float amplitude = m_pru_amplitude_max)
     {
         m_seq_pru_amplitude.Kill();
         m_seq_pru_amplitude = DOTween.Sequence();
-        m_pru_amplitude = m_pru_amplitude_max;
+        m_pru_amplitude = amplitude;
+        Debug.Log(amplitude);
         m_seq_pru_amplitude.Append(DOTween.To(() => m_pru_amplitude, (x) => m_pru_amplitude = x, 0, time).SetEase(Ease.OutQuad));
         m_seq_pru_amplitude.Play();
 
@@ -511,15 +516,25 @@ public class Natadecoco : MonoBehaviour
     // ゴールしたときの動きを再生
     void PlayGoalAnim()
     {
+        m_pru_dir = new Vector3(m_to_pos.x, 0.0f, -m_to_pos.y);
+        StartPruDOTween(1.0f, 0.5f, 1.0f);
         //DOTween.To(() => m_pru_time, (x) => m_pru_time = x, period * Mathf.PI, time).SetEase(Ease.Linear);
 
-        DOTween.To(() => m_rot.y, (x) => m_rot.y = x, m_rot.y + 360.0f, 1.5f).SetEase(Ease.OutQuint);
+        // 回転
+        Sequence seq_goal_rot = DOTween.Sequence();
+        float time0 = 0.3f;
+        seq_goal_rot.Append(DOTween.To(() => m_rot.y, (x) => m_rot.y = x, m_rot.y + 30.0f, time0).SetEase(Ease.InQuint));//SetEase(m_goal_rot_y_curve);
+        seq_goal_rot.Append(DOTween.To(() => m_rot.y, (x) => m_rot.y = x, m_rot.y + 360.0f, 1.5f- time0).SetEase(Ease.OutQuint));//SetEase(m_goal_rot_y_curve);
+
+        // 時間経過遅く
+        m_stage_mgr.PlayGoalTimeAnim();
+
         // つぶす
         Vector3 up_vec = Vector3.up;
         up_vec = transform.rotation * up_vec;
         Ease curve = Ease.OutSine;
-        float ease_time = 1.5f;
-        float delay_time = 0.4f;
+        float ease_time = 1.6f;
+        float delay_time = 0.3f;
         float yoko = 1.15f;
         float tate = 0.7f;
         float sx = yoko - Mathf.Abs(up_vec.x) * (yoko - tate);
@@ -528,6 +543,7 @@ public class Natadecoco : MonoBehaviour
         transform.DOScale(new Vector3(sx, sy, sz), ease_time).SetEase(curve).SetDelay(delay_time).OnComplete(() => { PlayGoalJumpAnim(); });
         // つぶした分だけ下げる
         DOTween.To(() => m_goal_hight, (x) => m_goal_hight = x, -(1.0f-tate)/2, ease_time).SetEase(curve).SetDelay(delay_time);
+        
         DOTween.To(() => m_goal_pru_time, (x) => m_goal_pru_time = x, 16 * Mathf.PI, ease_time).SetEase(Ease.InSine).SetDelay(delay_time);
         m_goal_pru_amplitude = 0.0f;
         DOTween.To(() => m_goal_pru_amplitude, (x) => m_goal_pru_amplitude = x, 0.01f, ease_time).SetEase(Ease.InSine).SetDelay(delay_time);
