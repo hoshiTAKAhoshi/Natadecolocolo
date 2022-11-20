@@ -25,18 +25,20 @@ public class BgCube : BgSolid
     {
         base.Update();
         transform.Rotate(m_add_rot * Time.deltaTime);
-        float up = 17.0f;
+        float up = 17.0f+10.0f;
         float down = 5.5f * 2.0f;
 
-        if (-transform.position.x + transform.position.z > up)
+//        if (-transform.position.x + transform.position.z > up)
+        if (-transform.localPosition.x + transform.localPosition.z > up)
         {
-            //Debug.Log(transform.position);
-            transform.position += new Vector3(down, 0, -down);
+                //Debug.Log(transform.position);
+                transform.position += new Vector3(down, 0, -down);
             //Debug.Log(transform.position);
         }
         else
         {
-            transform.position += new Vector3(-m_add_y, 0.0f, m_add_y) * Time.deltaTime;
+            //transform.position += new Vector3(-m_add_y, 0.0f, m_add_y) * Time.deltaTime;
+            transform.localPosition += new Vector3(-m_add_y, 0.0f, m_add_y) * Time.deltaTime;
         }
     }
 

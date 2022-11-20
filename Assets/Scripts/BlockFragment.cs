@@ -74,7 +74,7 @@ public class BlockFragment : MonoBehaviour
             m_is_fall = true;
             //m_seq_scale.Kill();
             //transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InSine);
-            m_rb.drag = 4.5f;
+            //m_rb.drag = 4.5f;
             //m_material = null;
             //m_material = m_rdr.material = new Material(m_brust_material);
 

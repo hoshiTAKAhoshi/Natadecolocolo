@@ -226,7 +226,7 @@ public class StageMgr : MonoBehaviour
     public void PlayGoalAnim()
     {
         m_time_scale = 0.8f;
-        DOTween.To(() => m_time_scale, (x) => m_time_scale = x, 1.0f, 0.3f).SetEase(Ease.InCubic).OnUpdate(() => { Time.timeScale = m_time_scale; });
+        DOTween.To(() => m_time_scale, (x) => m_time_scale = x, 1.0f, 0.3f).SetEase(Ease.InExpo).OnUpdate(() => { Time.timeScale = m_time_scale; });
         //m_bg_mgr.PlayGoalAnim();
 
         DOTween.To(() => m_bg_radius0, (x) => m_bg_radius0 = x, 60.0f, 0.6f).SetEase(Ease.OutExpo);
