@@ -18,6 +18,8 @@ public class BgSolid : MonoBehaviour
     {
         //Debug.Log(m_stage_mgr.GetNtdccScreenPos());
         m_material.SetVector("_NtdccScreenPos", m_stage_mgr.GetNtdccScreenPos());
+        m_material.SetFloat("_Radius0", m_stage_mgr.GetBgRadius0());
+        m_material.SetFloat("_Radius1", m_stage_mgr.GetBgRadius1());
         //m_material.SetFloat()
         //Debug.Log("SetVector");
     }

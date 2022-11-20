@@ -35,4 +35,9 @@ public class BgMgr : MonoBehaviour
         transform.position = Camera.main.transform.position;
         transform.localScale = Vector3.one * Camera.main.orthographicSize / 2.76f;
     }
+
+    public void PlayGoalAnim()
+    {
+
+    }
 }

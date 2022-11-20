@@ -527,7 +527,7 @@ public class Natadecoco : MonoBehaviour
         seq_goal_rot.Append(DOTween.To(() => m_rot.y, (x) => m_rot.y = x, m_rot.y + 360.0f, 1.5f- time0).SetEase(Ease.OutQuint));//SetEase(m_goal_rot_y_curve);
 
         // 時間経過遅く
-        m_stage_mgr.PlayGoalTimeAnim();
+        m_stage_mgr.PlayGoalAnim();
 
         // つぶす
         Vector3 up_vec = Vector3.up;

@@ -30,9 +30,9 @@ public class BgCube : BgSolid
 
         if (-transform.position.x + transform.position.z > up)
         {
-            Debug.Log(transform.position);
+            //Debug.Log(transform.position);
             transform.position += new Vector3(down, 0, -down);
-            Debug.Log(transform.position);
+            //Debug.Log(transform.position);
         }
         else
         {

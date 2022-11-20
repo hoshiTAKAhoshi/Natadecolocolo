@@ -7,8 +7,9 @@ Shader "Custom/Background"
         // マテリアルインスペクターの Color プロパティ、デフォルトを白に
         _Color ("Main Color", Color) = (1,1,1,1)
         _NtdccScreenPos("NtdccScreenPos", Vector) = (0.0, 0.509, 0.0)
-        _Radius("Radius", float) = 400.0
-        _Thickness("Thickness", float) = 20.0
+        _Radius0("Radius0", float) = 400.0
+        _Radius1("Radius1", float) = 300.0
+        //_Thickness("Thickness", float) = 20.0
 
     }
     SubShader
@@ -43,15 +44,17 @@ Shader "Custom/Background"
             // マテリアルからのカラー
             fixed4 _Color;
             float4 _NtdccScreenPos;
-            float _Radius;
+            float _Radius0;
+            float _Radius1;
             float _Thickness;
             // ピクセルシェーダー、入力不要
             fixed4 frag (v2f i) : SV_Target
             {
-                _Radius *= _ScreenParams.y/100;
+                _Radius0 *= _ScreenParams.y/100;
+                _Radius1 *= _ScreenParams.y/100;
                 _Thickness *= _ScreenParams.y/100;
                 half2 npos = _NtdccScreenPos.xy;
-                if(distance(i.screenPos,npos)>_Radius - _Thickness && distance(i.screenPos,npos)<_Radius)
+                if(distance(i.screenPos,npos)>_Radius1 && distance(i.screenPos,npos)<_Radius0)
                     return fixed4(1,1,1,1);
                 else
                     return _Color; // 単に返します

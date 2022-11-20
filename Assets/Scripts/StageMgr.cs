@@ -16,6 +16,8 @@ public class StageMgr : MonoBehaviour
     [SerializeField] private Floor m_pref_floor_hole = null;
     [SerializeField] private Floor m_pref_floor_hole_goal = null;
 
+    [SerializeField] private BgMgr m_bg_mgr;
+
     private Natadecoco m_ntdcc;
     private List<string> m_floor_data = new List<string>();
     private Dictionary<Vector2Int, Floor> m_floor_list = new Dictionary<Vector2Int, Floor>();
@@ -23,6 +25,8 @@ public class StageMgr : MonoBehaviour
     private Dictionary<Vector2Int, StageObjectBase> m_object_list = new Dictionary<Vector2Int, StageObjectBase>();
 
     private float m_time_scale = 1.0f;
+    private float m_bg_radius0 = 0.0f;
+    private float m_bg_radius1 = 0.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -209,9 +213,24 @@ public class StageMgr : MonoBehaviour
         return m_camera.WorldToScreenPoint(m_ntdcc.transform.position);
     }
 
-    public void PlayGoalTimeAnim()
+    public float GetBgRadius0()
+    {
+        return m_bg_radius0;
+    }
+
+    public float GetBgRadius1()
+    {
+        return m_bg_radius1;
+    }
+
+    public void PlayGoalAnim()
     {
         m_time_scale = 0.8f;
         DOTween.To(() => m_time_scale, (x) => m_time_scale = x, 1.0f, 0.3f).SetEase(Ease.InCubic).OnUpdate(() => { Time.timeScale = m_time_scale; });
+        //m_bg_mgr.PlayGoalAnim();
+
+        DOTween.To(() => m_bg_radius0, (x) => m_bg_radius0 = x, 60.0f, 0.6f).SetEase(Ease.OutExpo);
+        DOTween.To(() => m_bg_radius1, (x) => m_bg_radius1 = x, 60.0f, 0.6f).SetEase(Ease.OutExpo).SetDelay(0.25f);
     }
+
 }
