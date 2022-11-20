@@ -59,7 +59,7 @@ public class StageMgr : MonoBehaviour
                     {
                         case "S":
                             m_ntdcc = Instantiate(m_pref_ntdcc, new Vector3((int)(x / 2), 0.0f, -y), Quaternion.identity);
-                            m_ntdcc.SetPos(new Vector2Int((int)(x / 2), -y));
+                            m_ntdcc.SetPos(new Vector2Int((int)(x / 2), y));
                             m_ntdcc.InitNose(stage_data.nose_dire);
                             m_ntdcc.SetStageMgr(this);
                             m_ntdcc.transform.parent = this.transform;
@@ -229,8 +229,8 @@ public class StageMgr : MonoBehaviour
         DOTween.To(() => m_time_scale, (x) => m_time_scale = x, 1.0f, 0.3f).SetEase(Ease.InExpo).OnUpdate(() => { Time.timeScale = m_time_scale; });
         //m_bg_mgr.PlayGoalAnim();
 
-        DOTween.To(() => m_bg_radius0, (x) => m_bg_radius0 = x, 60.0f, 0.6f).SetEase(Ease.OutExpo);
-        DOTween.To(() => m_bg_radius1, (x) => m_bg_radius1 = x, 60.0f, 0.6f).SetEase(Ease.OutExpo).SetDelay(0.25f);
+        DOTween.To(() => m_bg_radius0, (x) => m_bg_radius0 = x, 60.0f, 0.74f).SetEase(Ease.OutExpo);
+        DOTween.To(() => m_bg_radius1, (x) => m_bg_radius1 = x, 60.0f, 0.74f).SetEase(Ease.OutExpo).SetDelay(0.25f);
     }
 
 }

@@ -29,11 +29,11 @@ Material:
     - _Glossiness: 0.5
     - _Metallic: 0
     - _Radius: 20
-    - _Radius0: 20
-    - _Radius1: 18
+    - _Radius0: 46.6
+    - _Radius1: 42.7
     - _Thickness: 0.1
     m_Colors:
-    - _Color: {r: 0.35203925, g: 0.71674484, b: 0.7490196, a: 1}
+    - _Color: {r: 0.352, g: 0.716, b: 0.749, a: 1}
     - _NtdccPos: {r: 0, g: 0, b: 0, a: 1}
-    - _NtdccScreenPos: {r: 0, g: 0.509, b: 0, a: 1}
+    - _NtdccScreenPos: {r: 1190.86, g: 680.4, b: 0, a: 1}
   m_BuildTextureStacks: []

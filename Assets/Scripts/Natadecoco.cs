@@ -533,7 +533,7 @@ public class Natadecoco : MonoBehaviour
         Vector3 up_vec = Vector3.up;
         up_vec = transform.rotation * up_vec;
         Ease curve = Ease.OutSine;
-        float ease_time = 1.6f;
+        float ease_time = 1.7f;
         float delay_time = 0.3f;
         float yoko = 1.15f;
         float tate = 0.7f;
@@ -555,6 +555,17 @@ public class Natadecoco : MonoBehaviour
     {
         m_state = NtdccState.GoalJump;
         DOTween.To(() => m_goal_hight, (x) => m_goal_hight = x, 15.0f, 2.5f).SetEase(Ease.OutQuart);
+
+        Vector3 up_vec = Vector3.up;
+        up_vec = transform.rotation * up_vec;
+        Ease curve = Ease.OutCubic;
+        float ease_time = 0.6f;
+        float yoko = 0.9f;
+        float tate = 1.5f;
+        float sx = yoko - Mathf.Abs(up_vec.x) * (yoko - tate);
+        float sy = yoko - Mathf.Abs(up_vec.y) * (yoko - tate);
+        float sz = yoko - Mathf.Abs(up_vec.z) * (yoko - tate);
+        transform.DOScale(new Vector3(sx, sy, sz), ease_time).SetEase(curve);
     }
 
     public Vector3 GetCenterPos()
