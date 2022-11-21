@@ -8,10 +8,17 @@ public class Block : StageObjectBase
     [SerializeField] private BlockFragment m_pref_block_fragment;
     [SerializeField] private Distortion m_pref_distortion;
 
+    [SerializeField] private float m_otto_amplitude_max;
+    [SerializeField] private float m_otto_time_in;
+    [SerializeField] private float m_otto_time_out;
+    [SerializeField] private AnimationCurve m_curve_otto_in;
+    [SerializeField] private AnimationCurve m_curve_otto_out;
+
     private Vector3 m_pru_dire = Vector3.zero;
     private float m_amplitude = 0.0f;
     private float m_white_ratio = 0.0f;
     private float m_expansion = 0.0f;
+    private Sequence m_seq_amplitude;
     private Material m_material;
     private bool m_is_hit_tama = false;
 
@@ -26,7 +33,7 @@ public class Block : StageObjectBase
     // Update is called once per frame
     void Update()
     {
-        if(m_is_hit_tama)
+        //if(m_is_hit_tama)
         {
             m_material.SetVector("_Amplitude", m_pru_dire * m_amplitude);
             m_material.SetFloat("_WhiteRatio", m_white_ratio);
@@ -83,5 +90,15 @@ public class Block : StageObjectBase
         DOTween.To(() => m_white_ratio, (y) => m_white_ratio = y, 0.4f, anim_time*time_scale).SetEase(Ease.OutCubic);
         m_expansion = 0.0f;
         DOTween.To(() => m_expansion, (y) => m_expansion = y, 0.08f, anim_time * time_scale).SetEase(Ease.InExpo);
+    }
+
+    public void PlayOttoPru(Vector2Int dire)
+    {
+        m_pru_dire = new Vector3(dire.x,0,-dire.y);
+        m_seq_amplitude.Kill();
+        m_seq_amplitude = DOTween.Sequence();
+        m_seq_amplitude.Append(DOTween.To(() => m_amplitude, (x) => m_amplitude = x, m_otto_amplitude_max, m_otto_time_in).SetEase(m_curve_otto_in));
+        m_seq_amplitude.Append(DOTween.To(() => m_amplitude, (x) => m_amplitude = x, 0.0f, m_otto_time_out).SetEase(m_curve_otto_out));
+
     }
 }

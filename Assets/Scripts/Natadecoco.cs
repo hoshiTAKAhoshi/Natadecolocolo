@@ -27,6 +27,14 @@ public class Natadecoco : MonoBehaviour
         BUTTON_MAX
     }
 
+    private Vector2Int[] m_to_pos_list = new Vector2Int[]
+    {
+        new Vector2Int( 0, -1 ),
+        new Vector2Int( 0, 1 ),
+        new Vector2Int( -1, 0 ),
+        new Vector2Int( 1, 0 )
+    };
+
     public Distortion m_pref_distortion_eff;            // 空間歪みエフェクト
     public Nose m_pref_nose;
     public Tama m_pref_tama;
@@ -44,6 +52,8 @@ public class Natadecoco : MonoBehaviour
     private bool m_is_otto = false;
     private float m_otto_time = 0.4f;                    // 回転する時間
     [SerializeField] private AnimationCurve m_otto_curve = null;
+    [SerializeField] private AnimationCurve m_block_otto_curve = null;
+    private string m_otto_obj = "";                       // 移動しようとした先のオブジェクト
 
     private NtdccState m_state = NtdccState.Idol;       // ナタデココの現在の状態
 
@@ -204,76 +214,40 @@ public class Natadecoco : MonoBehaviour
     // ナタデココの回転動作を開始する
     void StartRot(Button btn)
     {
-        m_rot = Vector3.zero;
-        //Debug.Log("aaa");
-        m_seq_rot = DOTween.Sequence();
-        //Debug.Log(m_to_pos);
-        switch (btn)
+        if (btn <= Button.Right)
         {
-            case Button.Up:
-                m_to_pos = new Vector2Int(0, -1);
-                m_state = NtdccState.Rotating;
-                if (CanMove(m_to_pos))
-                {
-                    m_is_otto = false;
-                    m_seq_rot.Append(DOTween.To(() => m_rot.x, (x) => m_rot.x = x, m_rot.x + 45.0f, m_rot_time / 2).SetEase(m_rot_ease[0]));
-                    m_seq_rot.Append(DOTween.To(() => m_rot.x, (y) => m_rot.x = y, m_rot.x + 90.0f, m_rot_time / 2).SetEase(m_rot_ease[1]).OnComplete(() => { m_state = NtdccState.RotFinish; }));
-                }
-                else
-                {
-                    m_is_otto = true;
-                    m_seq_rot.Append(DOTween.To(() => m_rot.x, (val) => m_rot.x = val, m_rot.x + 90.0f, m_otto_time).SetEase(m_otto_curve).OnComplete(() => { m_state = NtdccState.RotFinish; }));
-                }
-                break;
-            case Button.Down:
-                m_to_pos = new Vector2Int(0, 1);
-                m_state = NtdccState.Rotating;
-                if (CanMove(m_to_pos))
-                {
-                    m_is_otto = false;
-                    m_seq_rot.Append(DOTween.To(() => m_rot.x, (x) => m_rot.x = x, m_rot.x - 45.0f, m_rot_time / 2).SetEase(m_rot_ease[0]));
-                    m_seq_rot.Append(DOTween.To(() => m_rot.x, (y) => m_rot.x = y, m_rot.x - 90.0f, m_rot_time / 2).SetEase(m_rot_ease[1]).OnComplete(() => { m_state = NtdccState.RotFinish; }));
-                }
-                else
-                {
-                    m_is_otto = true;
-                    m_seq_rot.Append(DOTween.To(() => m_rot.x, (val) => m_rot.x = val, m_rot.x - 90.0f, m_otto_time).SetEase(m_otto_curve).OnComplete(() => { m_state = NtdccState.RotFinish; }));
-                }
-                break;
-            case Button.Left:
-                m_to_pos = new Vector2Int(-1, 0);
-                m_state = NtdccState.Rotating;
-                if (CanMove(m_to_pos))
-                {
-                    m_is_otto = false;
-                    m_state = NtdccState.Rotating;
-                    m_seq_rot.Append(DOTween.To(() => m_rot.z, (x) => m_rot.z = x, m_rot.z + 45.0f, m_rot_time / 2).SetEase(m_rot_ease[0]));
-                    m_seq_rot.Append(DOTween.To(() => m_rot.z, (y) => m_rot.z = y, m_rot.z + 90.0f, m_rot_time / 2).SetEase(m_rot_ease[1]).OnComplete(() => { m_state = NtdccState.RotFinish; }));
-                }
-                else
-                {
-                    m_is_otto = true;
-                    m_seq_rot.Append(DOTween.To(() => m_rot.z, (val) => m_rot.z = val, m_rot.z + 90.0f, m_otto_time).SetEase(m_otto_curve).OnComplete(() => { m_state = NtdccState.RotFinish; }));
-                }
-                break;
-            case Button.Right:
-                m_to_pos = new Vector2Int(1, 0);
-                m_state = NtdccState.Rotating;
-                if (CanMove(m_to_pos))
-                {
-                    m_is_otto = false;
-                    m_state = NtdccState.Rotating;
-                    m_seq_rot.Append(DOTween.To(() => m_rot.z, (x) => m_rot.z = x, m_rot.z - 45.0f, m_rot_time / 2).SetEase(m_rot_ease[0]));
-                    m_seq_rot.Append(DOTween.To(() => m_rot.z, (y) => m_rot.z = y, m_rot.z - 90.0f, m_rot_time / 2).SetEase(m_rot_ease[1]).OnComplete(() => { m_state = NtdccState.RotFinish; }));
-                }
-                else
-                {
-                    m_is_otto = true;
-                    m_seq_rot.Append(DOTween.To(() => m_rot.z, (val) => m_rot.z = val, m_rot.z - 90.0f, m_otto_time).SetEase(m_otto_curve).OnComplete(() => { m_state = NtdccState.RotFinish; }));
-                }
-                break;
-            default:
-                break;
+            m_to_pos = m_to_pos_list[(int)btn];
+        }
+
+        m_rot = Vector3.zero;
+        m_seq_rot = DOTween.Sequence();
+        m_state = NtdccState.Rotating;
+        m_otto_obj = CanMove(m_to_pos);
+        if (m_otto_obj == "")
+        {
+            m_is_otto = false;
+            if (m_to_pos.y != 0)
+            {
+                m_seq_rot.Append(DOTween.To(() => m_rot.x, (x) => m_rot.x = x, m_rot.x - 45.0f * m_to_pos.y, m_rot_time / 2).SetEase(m_rot_ease[0]));
+                m_seq_rot.Append(DOTween.To(() => m_rot.x, (y) => m_rot.x = y, m_rot.x - 90.0f * m_to_pos.y, m_rot_time / 2).SetEase(m_rot_ease[1]).OnComplete(() => { m_state = NtdccState.RotFinish; }));
+            }
+            else if (m_to_pos.x != 0)
+            {
+                m_seq_rot.Append(DOTween.To(() => m_rot.z, (x) => m_rot.z = x, m_rot.z - 45.0f * m_to_pos.x, m_rot_time / 2).SetEase(m_rot_ease[0]));
+                m_seq_rot.Append(DOTween.To(() => m_rot.z, (y) => m_rot.z = y, m_rot.z - 90.0f * m_to_pos.x, m_rot_time / 2).SetEase(m_rot_ease[1]).OnComplete(() => { m_state = NtdccState.RotFinish; }));
+            }
+        }
+        else
+        {
+            m_is_otto = true;
+            if (m_to_pos.y != 0)
+            {
+                m_seq_rot.Append(DOTween.To(() => m_rot.x, (val) => m_rot.x = val, m_rot.x - 90.0f * m_to_pos.y, m_otto_time).SetEase(m_otto_curve).OnComplete(() => { m_state = NtdccState.RotFinish; }));
+            }
+            else if (m_to_pos.x != 0)
+            {
+                m_seq_rot.Append(DOTween.To(() => m_rot.z, (val) => m_rot.z = val, m_rot.z - 90.0f * m_to_pos.x, m_otto_time).SetEase(m_otto_curve).OnComplete(() => { m_state = NtdccState.RotFinish; }));
+            }
         }
 
         m_seq_rot.Play();
@@ -294,6 +268,30 @@ public class Natadecoco : MonoBehaviour
             if(tama && tama.GetObjectType() == StageObjectBase.ObjectType.TAMA)
             {
                 tama.SetNatadecoco(this);
+            }
+        }
+        else
+        { // おっと時に移動先のオブジェクトに干渉する
+            switch(m_otto_obj)
+            {
+                case "E":
+                    {
+                        Block block = m_stage_mgr.GetStageObject(m_pos_on_field + m_to_pos) as Block;
+                        block.PlayOttoPru(m_to_pos);
+                    }
+                    break;
+                case "'":
+                    {
+
+                    }
+                    break;
+                case "O":
+                    {
+
+                    }
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -473,7 +471,8 @@ public class Natadecoco : MonoBehaviour
         }
     }
 
-    bool CanMove(Vector2Int dire)
+    // 移動できるか("":移動できる, それ以外:移動できない
+    string CanMove(Vector2Int dire)
     {
         //Debug.Log(dire);
         string floor = m_stage_mgr.GetFloorData(m_pos_on_field + dire);
@@ -485,13 +484,13 @@ public class Natadecoco : MonoBehaviour
                 {
                     //Debug.Log("nose:" + nose.m_nose_dire);
                     if (nose.m_nose_dire == new Vector3Int(dire.x, 0, -dire.y))
-                        return false;
+                        return "O"; // 鼻、移動先が穴なし床
                 }
             }
         }
         else
         {
-            return false;
+            return " "; // 移動先に床がない
         }
 
         // 弾が入ってて移動先が弾
@@ -499,18 +498,18 @@ public class Natadecoco : MonoBehaviour
         {
             string obj = m_stage_mgr.GetObjectData(m_pos_on_field + dire);
             if (obj == "'")
-                return false;
+                return "'";
         }
 
         // ブロック
         {
             string obj = m_stage_mgr.GetObjectData(m_pos_on_field + dire);
             if (obj == "E")
-                return false;
+                return "E";
 
         }
 
-        return true;
+        return "";
     }
 
     // ゴールしたときの動きを再生
