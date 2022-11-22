@@ -155,6 +155,57 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  m_block_otto_curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.7103688
+      outSlope: 0.7103688
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.13484386
+    - serializedVersion: 3
+      time: 0.22135876
+      value: 0.12883294
+      inSlope: 0.45296207
+      outSlope: 0.45296207
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.118807666
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.22966455
+      value: 0.13219993
+      inSlope: 0.20718934
+      outSlope: 0.20718934
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.1282036
+    - serializedVersion: 3
+      time: 0.5859113
+      value: 0.17525773
+      inSlope: -0.0059833685
+      outSlope: -0.0059833685
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.14242533
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.8629216
+      outSlope: -0.8629216
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.17876841
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   m_expansion_curve:
     serializedVersion: 2
     m_Curve:

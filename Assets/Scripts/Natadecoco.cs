@@ -35,6 +35,17 @@ public class Natadecoco : MonoBehaviour
         new Vector2Int( 1, 0 )
     };
 
+    struct Otto
+    {
+        public float time;
+        public AnimationCurve curve;
+        public Otto(float time,AnimationCurve curve)
+        {
+            this.time = time;
+            this.curve = curve;
+        }
+    }
+
     public Distortion m_pref_distortion_eff;            // 空間歪みエフェクト
     public Nose m_pref_nose;
     public Tama m_pref_tama;
@@ -51,9 +62,11 @@ public class Natadecoco : MonoBehaviour
     private Vector2Int m_pos_on_field = Vector2Int.zero;   // フィールド上の座標
     private bool m_is_otto = false;
     private float m_otto_time = 0.4f;                    // 回転する時間
+    private float m_otto_block_time = 0.35f;                    // 回転する時間
     [SerializeField] private AnimationCurve m_otto_curve = null;
     [SerializeField] private AnimationCurve m_block_otto_curve = null;
     private string m_otto_obj = "";                       // 移動しようとした先のオブジェクト
+    private Dictionary<string, Otto> m_otto_dict = new Dictionary<string, Otto>();
 
     private NtdccState m_state = NtdccState.Idol;       // ナタデココの現在の状態
 
@@ -97,6 +110,13 @@ public class Natadecoco : MonoBehaviour
     {
         m_material = GetComponent<Renderer>().material;
 
+        m_otto_dict.Add("",  new Otto(m_otto_time, m_otto_curve));
+        m_otto_dict.Add(" ", new Otto(m_otto_time, m_otto_curve));
+        m_otto_dict.Add("E", new Otto(m_otto_block_time, m_block_otto_curve));
+        m_otto_dict.Add("'", new Otto(m_otto_time, m_otto_curve));
+        m_otto_dict.Add("O", new Otto(m_otto_time, m_otto_curve));
+
+        //Time.timeScale = 0.3f;
         //m_tama_inside = Instantiate(m_pref_tama);
         //m_tama_inside.SetMode(Tama.TamaMode.INSIDE);
         //m_tama_inside.SetNatadecoco(this);
@@ -240,13 +260,15 @@ public class Natadecoco : MonoBehaviour
         else
         {
             m_is_otto = true;
+            Otto otto = m_otto_dict[m_otto_obj];
+
             if (m_to_pos.y != 0)
             {
-                m_seq_rot.Append(DOTween.To(() => m_rot.x, (val) => m_rot.x = val, m_rot.x - 90.0f * m_to_pos.y, m_otto_time).SetEase(m_otto_curve).OnComplete(() => { m_state = NtdccState.RotFinish; }));
+                m_seq_rot.Append(DOTween.To(() => m_rot.x, (val) => m_rot.x = val, m_rot.x - 90.0f * m_to_pos.y, otto.time).SetEase(otto.curve).OnComplete(() => { m_state = NtdccState.RotFinish; }));
             }
             else if (m_to_pos.x != 0)
             {
-                m_seq_rot.Append(DOTween.To(() => m_rot.z, (val) => m_rot.z = val, m_rot.z - 90.0f * m_to_pos.x, m_otto_time).SetEase(m_otto_curve).OnComplete(() => { m_state = NtdccState.RotFinish; }));
+                m_seq_rot.Append(DOTween.To(() => m_rot.z, (val) => m_rot.z = val, m_rot.z - 90.0f * m_to_pos.x, otto.time).SetEase(otto.curve).OnComplete(() => { m_state = NtdccState.RotFinish; }));
             }
         }
 
@@ -276,8 +298,8 @@ public class Natadecoco : MonoBehaviour
             {
                 case "E":
                     {
-                        Block block = m_stage_mgr.GetStageObject(m_pos_on_field + m_to_pos) as Block;
-                        block.PlayOttoPru(m_to_pos);
+                        //Block block = m_stage_mgr.GetStageObject(m_pos_on_field + m_to_pos) as Block;
+                        //block.PlayOttoPru(m_to_pos);
                     }
                     break;
                 case "'":
