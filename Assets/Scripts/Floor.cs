@@ -17,14 +17,15 @@ public class Floor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //Debug.Log(transform.localPosition.y);
     }
 
     public void StartSinking(bool is_otto)
     {
         //Debug.Log("Sinking");
-        transform.position = new Vector3(transform.position.x, -0.501f, transform.position.z);
-        if(!is_otto)
+        //transform.position = new Vector3(transform.position.x, -0.501f, transform.position.z);
+        transform.localPosition = new Vector3(transform.localPosition.x, -0.00001f, transform.localPosition.z);
+        if (!is_otto)
             transform.DOLocalMoveY(-0.4f, m_sinking_time).SetEase(m_sinking_curve);
         else
             transform.DOLocalMoveY(-0.2f, m_sinking_time*0.6f).SetEase(m_sinking_curve);
@@ -32,6 +33,7 @@ public class Floor : MonoBehaviour
 
     public float GetSinking()
     {
+        //return transform.localPosition.y + 0.51f;
         return transform.position.y + 0.51f;
     }
 }

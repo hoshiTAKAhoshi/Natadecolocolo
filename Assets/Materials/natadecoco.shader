@@ -165,6 +165,7 @@ Shader "Custom/natadecoco"
                 
                 // 水平方向の揺れ 
                 v.vertex.xyz += amp*(vWorld.y+0.5);
+                //v.vertex.xyz += amp*(v.vertex.y+0.5);
 
                 float4x4 mat = unity_ObjectToWorld;
                 float3 pos = float3(mat._m03,mat._m13,mat._m23);

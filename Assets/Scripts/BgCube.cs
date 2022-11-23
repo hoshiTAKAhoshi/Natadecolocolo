@@ -32,7 +32,7 @@ public class BgCube : BgSolid
         if (-transform.localPosition.x + transform.localPosition.z > up)
         {
                 //Debug.Log(transform.position);
-                transform.position += new Vector3(down, 0, -down);
+                transform.localPosition += new Vector3(down, 0, -down);
             //Debug.Log(transform.position);
         }
         else

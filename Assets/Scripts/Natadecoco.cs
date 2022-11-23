@@ -350,12 +350,14 @@ public class Natadecoco : MonoBehaviour
         transform.Rotate(m_rot.x, m_rot.y, m_rot.z, Space.World);
         float hight = -0.5f + 1.41421356f / 2.0f * (Mathf.Sin(Mathf.Deg2Rad * (Mathf.Abs((m_rot.z + m_rot.x + 360) % 90 + 45.0f)))) + m_stage_mgr.GetFloorSinking(m_pos_on_field) + m_goal_hight;
         //transform.position = new Vector3(m_fixed_pos.x + m_to_pos.x + m_to_pos.x * (0.70710678f * Mathf.Cos(Mathf.Deg2Rad * (135 - Mathf.Abs(m_rot.z))) - 0.5f), hight, m_fixed_pos.z + m_to_pos.z + m_to_pos.z * (0.70710678f * Mathf.Cos(Mathf.Deg2Rad * (135 - Mathf.Abs(m_rot.x))) - 0.5f));
-        transform.position = new Vector3
+        transform.localPosition = new Vector3
             (
             m_pos_on_field.x + m_to_pos.x + m_to_pos.x * (0.70710678f * Mathf.Cos(Mathf.Deg2Rad * (135 - Mathf.Abs(m_rot.z))) - 0.5f) + m_goal_pru_amplitude*Mathf.Sin(m_goal_pru_time),
             hight,
             -m_pos_on_field.y - m_to_pos.y - m_to_pos.y * (0.70710678f * Mathf.Cos(Mathf.Deg2Rad * (135 - Mathf.Abs(m_rot.x))) - 0.5f) + m_goal_pru_amplitude * Mathf.Sin(m_goal_pru_time)
             );
+        //transform.position += new Vector3(m_stage_mgr.transform.position.x,0.0f, m_stage_mgr.transform.position.z);
+        //transform.position += m_stage_mgr.transform.position;
     }
 
     // ナタデココを揺らす動作を開始する
