@@ -67,6 +67,7 @@ public class Natadecoco : MonoBehaviour
     [SerializeField] private AnimationCurve m_block_otto_curve = null;
     private string m_otto_obj = "";                       // 移動しようとした先のオブジェクト
     private Dictionary<string, Otto> m_otto_dict = new Dictionary<string, Otto>();
+    private Block m_otto_block = null;
 
     private NtdccState m_state = NtdccState.Idol;       // ナタデココの現在の状態
 
@@ -178,7 +179,12 @@ public class Natadecoco : MonoBehaviour
                     m_stage_mgr.StartFloorSinking(m_pos_on_field, m_is_otto);
                     // 弾があったら弾取得
                     CheckStageObject();
-
+                    ////おっとブロック停止
+                    //if (m_otto_block)
+                    //{
+                    //    m_otto_block.SetNatadecoco(null);
+                    //    m_otto_block = null;
+                    //}
                     // ゴールマスか
                     if (IsGoal(m_pos_on_field))
                     {
@@ -211,7 +217,6 @@ public class Natadecoco : MonoBehaviour
             default:
                 break;
         }
-
         // シェーダーに情報を渡す
         ApplyShader();
     }
@@ -298,8 +303,9 @@ public class Natadecoco : MonoBehaviour
             {
                 case "E":
                     {
-                        //Block block = m_stage_mgr.GetStageObject(m_pos_on_field + m_to_pos) as Block;
+                        m_otto_block = m_stage_mgr.GetStageObject(m_pos_on_field + m_to_pos) as Block;
                         //block.PlayOttoPru(m_to_pos);
+                        m_otto_block.SetNatadecoco(this);
                     }
                     break;
                 case "'":
@@ -369,7 +375,7 @@ public class Natadecoco : MonoBehaviour
         m_seq_pru_amplitude.Kill();
         m_seq_pru_amplitude = DOTween.Sequence();
         m_pru_amplitude = amplitude;
-        Debug.Log(amplitude);
+        //Debug.Log(amplitude);
         m_seq_pru_amplitude.Append(DOTween.To(() => m_pru_amplitude, (x) => m_pru_amplitude = x, 0, time).SetEase(Ease.OutQuad));
         m_seq_pru_amplitude.Play();
 
@@ -608,5 +614,20 @@ public class Natadecoco : MonoBehaviour
     public float GetPruAmplitude()
     {
         return m_pru_amplitude/ m_pru_amplitude_max;
+    }
+
+    public Vector3 GetRot()
+    {
+        return m_rot;
+    }
+
+    public Vector3 GetPruDire()
+    {
+        return m_pru_dir;
+    }
+
+    public Vector2Int GetToPos()
+    {
+        return m_to_pos;
     }
 }
