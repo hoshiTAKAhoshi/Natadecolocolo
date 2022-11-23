@@ -196,7 +196,7 @@ public class StageMgr : MonoBehaviour
             Floor floor = m_floor_list[pos];
             if (floor)
             {
-                return floor.GetSinking()-transform.position.y;
+                return floor.GetSinking();
             }
         }
         return 0.0f;
