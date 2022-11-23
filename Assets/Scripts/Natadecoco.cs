@@ -504,22 +504,6 @@ public class Natadecoco : MonoBehaviour
     {
         //Debug.Log(dire);
         string floor = m_stage_mgr.GetFloorData(m_pos_on_field + dire);
-        if (floor != " ")
-        {
-            if (floor == "O")
-            {
-                foreach (Nose nose in m_nose_list)
-                {
-                    //Debug.Log("nose:" + nose.m_nose_dire);
-                    if (nose.m_nose_dire == new Vector3Int(dire.x, 0, -dire.y))
-                        return "O"; // 鼻、移動先が穴なし床
-                }
-            }
-        }
-        else
-        {
-            return " "; // 移動先に床がない
-        }
 
         // 弾が入ってて移動先が弾
         if(m_is_tama_inside)
@@ -535,6 +519,22 @@ public class Natadecoco : MonoBehaviour
             if (obj == "E")
                 return "E";
 
+        }
+        if (floor != " ")
+        {
+            if (floor == "O")
+            {
+                foreach (Nose nose in m_nose_list)
+                {
+                    //Debug.Log("nose:" + nose.m_nose_dire);
+                    if (nose.m_nose_dire == new Vector3Int(dire.x, 0, -dire.y))
+                        return "O"; // 鼻、移動先が穴なし床
+                }
+            }
+        }
+        else
+        {
+            return " "; // 移動先に床がない
         }
 
         return "";

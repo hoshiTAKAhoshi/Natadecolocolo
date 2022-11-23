@@ -73,8 +73,10 @@ public class StageDataTable : MonoBehaviour
             // 鼻の向き
             new[]
             {
-                new Vector3Int(1,0,0),
+                //new Vector3Int(1,0,0),
+                //new Vector3Int(-1,0,0),
                 //new Vector3Int(0,0,1),
+                new Vector3Int(0,0,-1),
             }
         ),
     };
