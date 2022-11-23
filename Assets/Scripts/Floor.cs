@@ -33,7 +33,7 @@ public class Floor : MonoBehaviour
 
     public float GetSinking()
     {
-        //return transform.localPosition.y + 0.51f;
-        return transform.position.y + 0.51f;
+        return transform.localPosition.y + 0.51f;
+        //return transform.position.y + 0.51f;
     }
 }
