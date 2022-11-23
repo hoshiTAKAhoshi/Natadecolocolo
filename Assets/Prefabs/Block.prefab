@@ -114,7 +114,7 @@ MonoBehaviour:
   m_pref_distortion: {fileID: 8280624331408386667, guid: e61c4f0d578734b989cd78dd3a27f3dc, type: 3}
   m_otto_amplitude_max: 0.15
   m_otto_time_in: 0.3
-  m_otto_time_out: 0.5
+  m_otto_time_out: 0.6
   m_curve_otto_in:
     serializedVersion: 2
     m_Curve:
@@ -161,31 +161,22 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.4022749
-      value: 0.9940891
-      inSlope: 1.4641291
-      outSlope: 1.4641291
+      time: 0.35828334
+      value: 0.9952642
+      inSlope: 2.167569
+      outSlope: 2.167569
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.09416327
-    - serializedVersion: 3
-      time: 0.76245797
-      value: 0.9916403
-      inSlope: -0.36099955
-      outSlope: -0.36099955
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.1911939
+      outWeight: 0.0414731
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0.06837383
-      outSlope: 0.06837383
+      inSlope: 0.018132834
+      outSlope: 0.018132834
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.21817076
+      inWeight: 0.069025345
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
