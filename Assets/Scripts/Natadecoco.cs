@@ -65,21 +65,23 @@ public class Natadecoco : MonoBehaviour
     private Vector3 m_rot = Vector3.zero;               // 回転開始から回転終了までの回転量
     private Vector3 m_fixed_rot = Vector3.zero;         // 回転終了して確定した回転量
     private Vector3 m_fixed_pos = Vector3.zero;         // 回転終了して確定した座標
-    private Vector2Int m_to_pos = Vector2Int.zero;            // 移動方向のベクトル
-    private Vector2Int m_pos_on_field = Vector2Int.zero;   // フィールド上の座標
+    private Vector2Int m_to_pos = Vector2Int.zero;      // 移動方向のベクトル
+    private Vector2Int m_pos_on_field = Vector2Int.zero;// フィールド上の座標
     private bool m_is_otto = false;
-    private float m_otto_time = 0.4f;                    // 回転する時間
-    private float m_otto_block_time = 0.35f;                    // 回転する時間
+    private float m_otto_time = 0.4f;                   // 回転する時間
+    private float m_otto_block_time = 0.35f;            // 回転する時間
+    private float m_otto_floor_time = 0.49f;
     [SerializeField] private AnimationCurve m_otto_curve = null;
-    [SerializeField] private AnimationCurve m_block_otto_curve = null;
-    private string m_otto_obj = "";                       // 移動しようとした先のオブジェクト
+    [SerializeField] private AnimationCurve m_otto_block_curve = null;
+    [SerializeField] private AnimationCurve m_otto_floor_curve = null;
+    private string m_otto_obj = "";                     // 移動しようとした先のオブジェクト
     private Dictionary<string, Otto> m_otto_dict = new Dictionary<string, Otto>();
     private Block m_otto_block = null;
 
     private NtdccState m_state = NtdccState.IDOL;       // ナタデココの現在の状態
 
     // 回転終わりのプルプル
-    private const float m_pru_amplitude_max = 0.2f;               // プルプルの振幅
+    private const float m_pru_amplitude_max = 0.2f;     // プルプルの振幅
     private float m_pru_amplitude = 0.0f;               // プルプルの振幅
     private Vector3 m_pru_dir = Vector3.zero;           // プルプルの方向
     private float m_pru_time = 0.0f;                    // プルプルする時間
@@ -121,9 +123,9 @@ public class Natadecoco : MonoBehaviour
 
         m_otto_dict.Add("",  new Otto(m_otto_time, m_otto_curve));
         m_otto_dict.Add(" ", new Otto(m_otto_time, m_otto_curve));
-        m_otto_dict.Add("E", new Otto(m_otto_block_time, m_block_otto_curve));
-        m_otto_dict.Add("'", new Otto(m_otto_time, m_otto_curve));
-        m_otto_dict.Add("O", new Otto(m_otto_time, m_otto_curve));
+        m_otto_dict.Add("E", new Otto(m_otto_block_time, m_otto_block_curve));
+        m_otto_dict.Add("'", new Otto(m_otto_floor_time, m_otto_floor_curve));
+        m_otto_dict.Add("O", new Otto(m_otto_floor_time, m_otto_floor_curve));
 
         //Time.timeScale = 0.3f;
         //m_tama_inside = Instantiate(m_pref_tama);

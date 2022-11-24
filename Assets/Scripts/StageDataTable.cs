@@ -66,7 +66,7 @@ public class StageDataTable : MonoBehaviour
             // フィールドデータ
             new[]
             {
-                "SQ Q Q QEQ",
+                "SQ Q Q OEQ",
                 " G'QEO Q G",
                 " Q Q Q Q"
             },
