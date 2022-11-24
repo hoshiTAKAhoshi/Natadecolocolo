@@ -68,15 +68,15 @@ public class StageDataTable : MonoBehaviour
             {
                 "SQ Q Q QEQ",
                 " G'QEO Q G",
-                " Q Q Q Q Q"
+                " Q Q Q Q"
             },
             // 鼻の向き
             new[]
             {
-                //new Vector3Int(1,0,0),
-                //new Vector3Int(-1,0,0),
+                //new Vector3Int(0,1,0),
+                new Vector3Int(-1,0,0),
                 //new Vector3Int(0,0,1),
-                new Vector3Int(0,0,-1),
+                //new Vector3Int(0,0,-1),
             }
         ),
     };
