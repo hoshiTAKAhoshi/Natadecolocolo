@@ -7,22 +7,29 @@ public class Natadecoco : MonoBehaviour
 {
     private enum NtdccState
     {
-        Idol = 0,
-        Rotating = 1,
-        RotFinish = 2,
-        Goal = 3,
-        GoalJump = 4,
+        IDOL = 0,
+        ROTATING = 1,
+        ROT_FINISH = 2,
+        GOAL = 3,
+        GOAL_JUMP = 4,
+        
         NTDCC_STATE_MAX = 5
+    }
+
+    private enum PruState
+    {
+        IDLE = 0,
+        PRU = 1
     }
 
     private enum Button
     {
-        Up = 0,
-        Down = 1,
-        Left = 2,
-        Right = 3,
+        UP = 0,
+        DOWN = 1,
+        LEFT = 2,
+        RIGHT = 3,
 
-        Shoot = 4,
+        SHOOT = 4,
 
         BUTTON_MAX
     }
@@ -69,7 +76,7 @@ public class Natadecoco : MonoBehaviour
     private Dictionary<string, Otto> m_otto_dict = new Dictionary<string, Otto>();
     private Block m_otto_block = null;
 
-    private NtdccState m_state = NtdccState.Idol;       // ナタデココの現在の状態
+    private NtdccState m_state = NtdccState.IDOL;       // ナタデココの現在の状態
 
     // 回転終わりのプルプル
     private const float m_pru_amplitude_max = 0.2f;               // プルプルの振幅
@@ -78,6 +85,7 @@ public class Natadecoco : MonoBehaviour
     private float m_pru_time = 0.0f;                    // プルプルする時間
     private Sequence m_seq_pru_time;                    // プルプルする時間のDOTweenのSequence
     private Sequence m_seq_pru_amplitude;               // プルプルする振幅のDOTweenのSequence
+    private PruState m_pru_state = PruState.IDLE;       // プルプルの状態
     // 回転始めのもちっと
     private float m_mochi_amplitude = 0.25f;             // もちっとの振幅
     private Vector3 m_mochi_dir = Vector3.zero;         // もちっとの方向
@@ -151,25 +159,25 @@ public class Natadecoco : MonoBehaviour
 
         switch (m_state)
         {
-            case NtdccState.Idol:
+            case NtdccState.IDOL:
                 {
                     // 現在押されているボタン
                     Button now_btn = PushedButton();
 
                     // 移動ボタンが押されていたら回転を開始する
-                    if (now_btn <= Button.Right)
+                    if (now_btn <= Button.RIGHT)
                     {
                         StartRot(now_btn);
                     }
                     // 弾を撃つ
-                    else if (now_btn == Button.Shoot)
+                    else if (now_btn == Button.SHOOT)
                     {
                         Shoot();
                     }
 
                 }
                 break;
-            case NtdccState.RotFinish:
+            case NtdccState.ROT_FINISH:
                 {
                     // 鼻の向きを更新
                     UpdateNoseDire();
@@ -190,7 +198,7 @@ public class Natadecoco : MonoBehaviour
                     {
                         Debug.Log("ゴール");
                         PlayGoalAnim();
-                        m_state = NtdccState.Goal;
+                        m_state = NtdccState.GOAL;
                     }
                     else
                     {
@@ -198,18 +206,18 @@ public class Natadecoco : MonoBehaviour
                         StartPru();
 
                         // 入力待ち状態に移行
-                        m_state = NtdccState.Idol;
+                        m_state = NtdccState.IDOL;
                     }
                     //Debug.Log(m_stage_mgr.GetFloorData(m_pos_on_field.x, m_pos_on_field.y));
 
                 }
                 break;
-            case NtdccState.Goal:
+            case NtdccState.GOAL:
                 {
                     //m_rot.y++;
                 }
                 break;
-            case NtdccState.GoalJump:
+            case NtdccState.GOAL_JUMP:
                 {
 
                 }
@@ -239,14 +247,14 @@ public class Natadecoco : MonoBehaviour
     // ナタデココの回転動作を開始する
     void StartRot(Button btn)
     {
-        if (btn <= Button.Right)
+        if (btn <= Button.RIGHT)
         {
             m_to_pos = m_to_pos_list[(int)btn];
         }
 
         m_rot = Vector3.zero;
         m_seq_rot = DOTween.Sequence();
-        m_state = NtdccState.Rotating;
+        m_state = NtdccState.ROTATING;
         m_otto_obj = CanMove(m_to_pos);
         if (m_otto_obj == "")
         {
@@ -254,12 +262,12 @@ public class Natadecoco : MonoBehaviour
             if (m_to_pos.y != 0)
             {
                 m_seq_rot.Append(DOTween.To(() => m_rot.x, (x) => m_rot.x = x, m_rot.x - 45.0f * m_to_pos.y, m_rot_time / 2).SetEase(m_rot_ease[0]));
-                m_seq_rot.Append(DOTween.To(() => m_rot.x, (y) => m_rot.x = y, m_rot.x - 90.0f * m_to_pos.y, m_rot_time / 2).SetEase(m_rot_ease[1]).OnComplete(() => { m_state = NtdccState.RotFinish; }));
+                m_seq_rot.Append(DOTween.To(() => m_rot.x, (y) => m_rot.x = y, m_rot.x - 90.0f * m_to_pos.y, m_rot_time / 2).SetEase(m_rot_ease[1]).OnComplete(() => { m_state = NtdccState.ROT_FINISH; }));
             }
             else if (m_to_pos.x != 0)
             {
                 m_seq_rot.Append(DOTween.To(() => m_rot.z, (x) => m_rot.z = x, m_rot.z - 45.0f * m_to_pos.x, m_rot_time / 2).SetEase(m_rot_ease[0]));
-                m_seq_rot.Append(DOTween.To(() => m_rot.z, (y) => m_rot.z = y, m_rot.z - 90.0f * m_to_pos.x, m_rot_time / 2).SetEase(m_rot_ease[1]).OnComplete(() => { m_state = NtdccState.RotFinish; }));
+                m_seq_rot.Append(DOTween.To(() => m_rot.z, (y) => m_rot.z = y, m_rot.z - 90.0f * m_to_pos.x, m_rot_time / 2).SetEase(m_rot_ease[1]).OnComplete(() => { m_state = NtdccState.ROT_FINISH; }));
             }
         }
         else
@@ -269,11 +277,11 @@ public class Natadecoco : MonoBehaviour
 
             if (m_to_pos.y != 0)
             {
-                m_seq_rot.Append(DOTween.To(() => m_rot.x, (val) => m_rot.x = val, m_rot.x - 90.0f * m_to_pos.y, otto.time).SetEase(otto.curve).OnComplete(() => { m_state = NtdccState.RotFinish; }));
+                m_seq_rot.Append(DOTween.To(() => m_rot.x, (val) => m_rot.x = val, m_rot.x - 90.0f * m_to_pos.y, otto.time).SetEase(otto.curve).OnComplete(() => { m_state = NtdccState.ROT_FINISH; }));
             }
             else if (m_to_pos.x != 0)
             {
-                m_seq_rot.Append(DOTween.To(() => m_rot.z, (val) => m_rot.z = val, m_rot.z - 90.0f * m_to_pos.x, otto.time).SetEase(otto.curve).OnComplete(() => { m_state = NtdccState.RotFinish; }));
+                m_seq_rot.Append(DOTween.To(() => m_rot.z, (val) => m_rot.z = val, m_rot.z - 90.0f * m_to_pos.x, otto.time).SetEase(otto.curve).OnComplete(() => { m_state = NtdccState.ROT_FINISH; }));
             }
         }
 
@@ -329,16 +337,16 @@ public class Natadecoco : MonoBehaviour
     Button PushedButton()
     {
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
-            return Button.Up;
+            return Button.UP;
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.A))
-            return Button.Down;
+            return Button.DOWN;
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.Q))
-            return Button.Left;
+            return Button.LEFT;
         if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.S))
-            return Button.Right;
+            return Button.RIGHT;
 
         if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.J))
-            return Button.Shoot;
+            return Button.SHOOT;
 
         return Button.BUTTON_MAX;
     }
@@ -363,11 +371,21 @@ public class Natadecoco : MonoBehaviour
     // ナタデココを揺らす動作を開始する
     void StartPru()
     {
-        m_pru_dir = new Vector3(m_to_pos.x,0.0f,-m_to_pos.y);
+        Vector3 new_pru_dir = new Vector3(m_to_pos.x, 0.0f, -m_to_pos.y);
+        if (m_is_otto) new_pru_dir *= -1;
 
-        if (m_is_otto) m_pru_dir *= -1;
+        if (m_pru_state == PruState.IDLE)
+        {   // プルが終わっていたら
+            m_pru_dir = new_pru_dir;
+        }
+        else
+        {   // プルの途中だったら
+            //DOTween.To(() => m_pru_dir, (x) => m_pru_dir = x, new_pru_dir, 0.0001f);
+            m_pru_dir = new_pru_dir;
+        }
 
         StartPruDOTween(3.5f, 0.9f);
+        m_pru_state = PruState.PRU;
 
         //Debug.Log("Pru");
     }
@@ -383,9 +401,29 @@ public class Natadecoco : MonoBehaviour
 
         m_seq_pru_time.Kill();
         m_seq_pru_time = DOTween.Sequence();
-        m_pru_time = 0.0f;
-        m_seq_pru_time.Append(DOTween.To(() => m_pru_time, (x) => m_pru_time = x, period * Mathf.PI, time).SetEase(Ease.Linear));
+        if (m_pru_state == PruState.IDLE)
+        {
+            m_pru_time = 0.0f;
+        }
+        else
+        {
+            //while(true)
+            //{
+            //    m_pru_time -= 2 * Mathf.PI;
+            //    if (m_pru_time <= 0)
+            //        break;
+            //}
+            m_pru_time = 0.0f;
+
+        }
+        m_seq_pru_time.Append(DOTween.To(() => m_pru_time, (x) => m_pru_time = x, period * Mathf.PI, time).SetEase(Ease.Linear)).OnComplete(() => { CompletePru(); });
         m_seq_pru_time.Play();
+    }
+
+    void CompletePru()
+    {
+        m_pru_state = PruState.IDLE;
+        Debug.Log("Complete Pru");
     }
 
     // 回転後の姿勢を保存
@@ -582,7 +620,7 @@ public class Natadecoco : MonoBehaviour
 
     void PlayGoalJumpAnim()
     {
-        m_state = NtdccState.GoalJump;
+        m_state = NtdccState.GOAL_JUMP;
         DOTween.To(() => m_goal_hight, (x) => m_goal_hight = x, 15.0f, 2.5f).SetEase(Ease.OutQuart);
 
         Vector3 up_vec = Vector3.up;
