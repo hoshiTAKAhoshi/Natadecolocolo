@@ -233,4 +233,8 @@ public class StageMgr : MonoBehaviour
         DOTween.To(() => m_bg_radius1, (x) => m_bg_radius1 = x, 60.0f, 0.74f).SetEase(Ease.OutExpo).SetDelay(0.25f);
     }
 
+    public void AddForceBgCube(Vector2 center_screen_pos, float power)
+    {
+        m_bg_mgr.AddForceBgCube(center_screen_pos, power);
+    }
 }

@@ -585,6 +585,7 @@ public class Natadecoco : MonoBehaviour
     // ゴールしたときの動きを再生
     void PlayGoalAnim()
     {
+        m_stage_mgr.AddForceBgCube(Camera.main.WorldToScreenPoint(transform.position), 2.0f);
         m_pru_dir = new Vector3(m_to_pos.x, 0.0f, -m_to_pos.y);
         StartPruDOTween(1.0f, 0.5f, 1.0f);
         //DOTween.To(() => m_pru_time, (x) => m_pru_time = x, period * Mathf.PI, time).SetEase(Ease.Linear);
