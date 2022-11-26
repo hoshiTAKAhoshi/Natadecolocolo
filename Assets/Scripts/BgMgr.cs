@@ -7,7 +7,7 @@ public class BgMgr : MonoBehaviour
     [SerializeField] private StageMgr m_stage_mgr;
     [SerializeField] private BgCube m_pref_bg_cube;
 
-    private int m_cube_num_max = 25*2;
+    private int m_cube_num_max = (int)(25*1.2f);
     private List<BgCube> m_cube_list = new List<BgCube>();
 
     // Start is called before the first frame update
