@@ -6,10 +6,12 @@ using UnityEngine;
 public class BgCube : BgSolid
 {
     private Vector3 m_add_rot;
-    private float m_add_y;
-    private Vector2 m_force;
+    private float m_add_y = 0.0f;
+    private float m_add_y_force = 0.0f;     // ƒS[ƒ‹—p
+    private Vector2 m_force;                // Žü‚è‚ÉL‚ª‚é—p
 
     [SerializeField] private AnimationCurve m_force_decay_curve;
+    [SerializeField] private AnimationCurve m_force_y_curve;
 
     // Start is called before the first frame update
     new void Start()
@@ -28,7 +30,7 @@ public class BgCube : BgSolid
     new void Update()
     {
         base.Update();
-        transform.Rotate(m_add_rot * Time.deltaTime * m_force*30.0f);
+        transform.Rotate(m_add_rot * Time.deltaTime * (1+(m_force.magnitude * 30.0f + m_add_y_force*20.0f)));
         float up = 17.0f+10.0f;
         float down = 5.5f * 2.0f;
         //Camera.main.ScreenToWorldPoint();
@@ -46,7 +48,8 @@ public class BgCube : BgSolid
         else
         {
             //transform.position += new Vector3(-m_add_y, 0.0f, m_add_y) * Time.deltaTime;
-            transform.localPosition += new Vector3(-m_add_y + m_force.x - m_force.y, 0.0f, m_add_y + m_force.x + m_force.y) * Time.deltaTime;
+            float add_y = m_add_y + m_add_y_force;
+            transform.localPosition += new Vector3(-add_y + m_force.x - m_force.y, 0.0f, add_y + m_force.x + m_force.y) * Time.deltaTime;
         }
     }
 
@@ -57,16 +60,21 @@ public class BgCube : BgSolid
 
     }
 
-    public void AddForceBgCube(Vector2 center_screen_pos, float power)
+    public void AddForceBgCube(Vector2 center_screen_pos, float power, bool is_goal = true)
     {
-        Debug.Log("cube");
-        Vector2 cube_screen_pos = Camera.main.WorldToScreenPoint(transform.position);
-        Vector2 vec = cube_screen_pos - center_screen_pos;
-        float mag = vec.magnitude*0.002f;
-        Vector2 force = vec.normalized / (mag*mag+0.5f);
-        force *= power;
-        DOTween.To(() => m_force, (x) => m_force = x, force, 3.0f).SetEase(m_force_decay_curve);
-
+        if (is_goal)
+        {
+            Debug.Log("cube");
+            Vector2 cube_screen_pos = Camera.main.WorldToScreenPoint(transform.position);
+            Vector2 vec = cube_screen_pos - center_screen_pos;
+            float mag = vec.magnitude * 0.002f;
+            Vector2 force = vec.normalized / (mag * mag + 0.5f);
+            force *= power;
+            DOTween.To(() => m_force, (x) => m_force = x, force, 3.0f).SetEase(m_force_decay_curve);
+            DOTween.To(() => m_add_y_force, (x) => m_add_y_force = x, (transform.localScale.x - 0.3f) * 15.0f * Random.Range(0.7f,1.3f), 3.0f + Random.Range(-0.3f,0.5f))
+                .SetEase(m_force_y_curve).SetDelay(1.7f);
+        }
     }
+
 
 }

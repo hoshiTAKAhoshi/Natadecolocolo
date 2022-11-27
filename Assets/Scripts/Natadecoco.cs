@@ -71,7 +71,7 @@ public class Natadecoco : MonoBehaviour
     private float m_otto_time = 0.4f;                   // 回転する時間
     private float m_otto_block_time = 0.35f;            // 回転する時間
     private float m_otto_floor_time = 0.49f;
-    private float m_otto_tama_time = 0.8f;
+    private float m_otto_tama_time = 0.77f;
     [SerializeField] private AnimationCurve m_otto_curve = null;
     [SerializeField] private AnimationCurve m_otto_block_curve = null;
     [SerializeField] private AnimationCurve m_otto_floor_curve = null;
@@ -621,7 +621,7 @@ public class Natadecoco : MonoBehaviour
     void PlayGoalJumpAnim()
     {
         m_state = NtdccState.GOAL_JUMP;
-        DOTween.To(() => m_goal_hight, (x) => m_goal_hight = x, 15.0f, 2.5f).SetEase(Ease.OutQuart);
+        DOTween.To(() => m_goal_hight, (x) => m_goal_hight = x, 15.0f, 3.0f).SetEase(Ease.OutQuart);
 
         Vector3 up_vec = Vector3.up;
         up_vec = transform.rotation * up_vec;
