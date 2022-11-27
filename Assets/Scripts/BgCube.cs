@@ -65,7 +65,7 @@ public class BgCube : BgSolid
         float mag = vec.magnitude*0.002f;
         Vector2 force = vec.normalized / (mag*mag+0.5f);
         force *= power;
-        DOTween.To(() => m_force, (x) => m_force = x, force, 2.0f).SetEase(m_force_decay_curve);
+        DOTween.To(() => m_force, (x) => m_force = x, force, 3.0f).SetEase(m_force_decay_curve);
 
     }
 
