@@ -71,12 +71,13 @@ public class Natadecoco : MonoBehaviour
     private float m_otto_time = 0.4f;                   // 回転する時間
     private float m_otto_block_time = 0.35f;            // 回転する時間
     private float m_otto_floor_time = 0.49f;
+    private float m_otto_tama_time = 0.8f;
     [SerializeField] private AnimationCurve m_otto_curve = null;
     [SerializeField] private AnimationCurve m_otto_block_curve = null;
     [SerializeField] private AnimationCurve m_otto_floor_curve = null;
+    [SerializeField] private AnimationCurve m_otto_tama_curve = null;
     private string m_otto_obj = "";                     // 移動しようとした先のオブジェクト
     private Dictionary<string, Otto> m_otto_dict = new Dictionary<string, Otto>();
-    private Block m_otto_block = null;
 
     private NtdccState m_state = NtdccState.IDOL;       // ナタデココの現在の状態
 
@@ -124,7 +125,7 @@ public class Natadecoco : MonoBehaviour
         m_otto_dict.Add("",  new Otto(m_otto_time, m_otto_curve));
         m_otto_dict.Add(" ", new Otto(m_otto_time, m_otto_curve));
         m_otto_dict.Add("E", new Otto(m_otto_block_time, m_otto_block_curve));
-        m_otto_dict.Add("'", new Otto(m_otto_floor_time, m_otto_floor_curve));
+        m_otto_dict.Add("'", new Otto(m_otto_tama_time, m_otto_tama_curve));
         m_otto_dict.Add("O", new Otto(m_otto_floor_time, m_otto_floor_curve));
 
         //Time.timeScale = 0.3f;
@@ -156,6 +157,8 @@ public class Natadecoco : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(transform.position);
+
         // 現在の姿勢を計算、反映する
         CalcTransform();
 
@@ -189,12 +192,6 @@ public class Natadecoco : MonoBehaviour
                     m_stage_mgr.StartFloorSinking(m_pos_on_field, m_is_otto);
                     // 弾があったら弾取得
                     CheckStageObject();
-                    ////おっとブロック停止
-                    //if (m_otto_block)
-                    //{
-                    //    m_otto_block.SetNatadecoco(null);
-                    //    m_otto_block = null;
-                    //}
                     // ゴールマスか
                     if (IsGoal(m_pos_on_field))
                     {
@@ -313,14 +310,14 @@ public class Natadecoco : MonoBehaviour
             {
                 case "E":
                     {
-                        m_otto_block = m_stage_mgr.GetStageObject(m_pos_on_field + m_to_pos) as Block;
-                        //block.PlayOttoPru(m_to_pos);
-                        m_otto_block.SetNatadecoco(this);
+                        Block otto_block = m_stage_mgr.GetStageObject(m_pos_on_field + m_to_pos) as Block;
+                        otto_block.SetNatadecoco(this);
                     }
                     break;
                 case "'":
                     {
-
+                        Tama tama = m_stage_mgr.GetStageObject(m_pos_on_field+m_to_pos) as Tama;
+                        tama.SetNatadecoco(this);
                     }
                     break;
                 case "O":

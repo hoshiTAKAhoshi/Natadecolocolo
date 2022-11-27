@@ -13,7 +13,7 @@ public class Tama : StageObjectBase
 
     Vector2Int m_pos_on_field = Vector2Int.zero;
     float m_yura_time = 0.0f;
-    const float m_yura_amplitude = 0.2f;
+    const float m_yura_amplitude = 0.15f;
     const float m_yura_speed = 2.0f;
 
     Vector3 m_shot_dire = Vector3.zero;
