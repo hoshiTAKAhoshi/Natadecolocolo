@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,8 @@ public class BgCube : BgSolid
     private Vector3 m_add_rot;
     private float m_add_y;
     private Vector2 m_force;
+
+    [SerializeField] private AnimationCurve m_force_decay_curve;
 
     // Start is called before the first frame update
     new void Start()
@@ -25,13 +28,13 @@ public class BgCube : BgSolid
     new void Update()
     {
         base.Update();
-        transform.Rotate(m_add_rot * Time.deltaTime);
+        transform.Rotate(m_add_rot * Time.deltaTime * m_force*30.0f);
         float up = 17.0f+10.0f;
         float down = 5.5f * 2.0f;
         //Camera.main.ScreenToWorldPoint();
         //Camera.main.WorldToScreenPoint();
 
-        m_force *= 0.95f;
+        //m_force *= 0.95f;
 
 //        if (-transform.position.x + transform.position.z > up)
         if (-transform.localPosition.x + transform.localPosition.z > up)
@@ -60,8 +63,10 @@ public class BgCube : BgSolid
         Vector2 cube_screen_pos = Camera.main.WorldToScreenPoint(transform.position);
         Vector2 vec = cube_screen_pos - center_screen_pos;
         float mag = vec.magnitude*0.002f;
-        m_force = vec.normalized / (mag*mag+0.5f);
-        m_force *= power;
+        Vector2 force = vec.normalized / (mag*mag+0.5f);
+        force *= power;
+        DOTween.To(() => m_force, (x) => m_force = x, force, 2.0f).SetEase(m_force_decay_curve);
+
     }
 
 }
