@@ -9,6 +9,7 @@ Shader "Custom/Background"
         _NtdccScreenPos("NtdccScreenPos", Vector) = (0.0, 0.509, 0.0)
         _Radius0("Radius0", float) = 400.0
         _Radius1("Radius1", float) = 300.0
+        _WhiteRatio("WhiteRatio", float) = 0.0
         //_Thickness("Thickness", float) = 20.0
 
     }
@@ -47,6 +48,7 @@ Shader "Custom/Background"
             float _Radius0;
             float _Radius1;
             float _Thickness;
+            float _WhiteRatio;
             // ピクセルシェーダー、入力不要
             fixed4 frag (v2f i) : SV_Target
             {
@@ -55,9 +57,14 @@ Shader "Custom/Background"
                 _Thickness *= _ScreenParams.y/100;
                 half2 npos = _NtdccScreenPos.xy;
                 if(distance(i.screenPos,npos)>_Radius1 && distance(i.screenPos,npos)<_Radius0)
+                {
                     return fixed4(1,1,1,1);
+                }
                 else
-                    return _Color; // 単に返します
+                {
+                    return _Color*(1) + (fixed4(1,1,1,1)-_Color)*_WhiteRatio; // 単に返します
+                    //return fixed4(_Color.x)
+                }
             }
             ENDCG
         }

@@ -18,6 +18,8 @@ public class StageMgr : MonoBehaviour
 
     [SerializeField] private BgMgr m_bg_mgr;
 
+    [SerializeField] private AnimationCurve m_goal_white_curve = null;
+
     private Natadecoco m_ntdcc;
     private List<string> m_floor_data = new List<string>();
     private Dictionary<Vector2Int, Floor> m_floor_list = new Dictionary<Vector2Int, Floor>();
@@ -27,6 +29,8 @@ public class StageMgr : MonoBehaviour
     private float m_time_scale = 1.0f;
     private float m_bg_radius0 = 0.0f;
     private float m_bg_radius1 = 0.0f;
+    private float m_white_ratio = 0.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -223,6 +227,11 @@ public class StageMgr : MonoBehaviour
         return m_bg_radius1;
     }
 
+    public float GetWhiteRatio()
+    {
+        return m_white_ratio;
+    }
+
     public void PlayGoalAnim()
     {
         m_time_scale = 0.8f;
@@ -231,6 +240,9 @@ public class StageMgr : MonoBehaviour
 
         DOTween.To(() => m_bg_radius0, (x) => m_bg_radius0 = x, 60.0f, 0.74f).SetEase(Ease.OutExpo);
         DOTween.To(() => m_bg_radius1, (x) => m_bg_radius1 = x, 60.0f, 0.74f).SetEase(Ease.OutExpo).SetDelay(0.25f);
+
+        // BgCube白くする
+        DOTween.To(() => m_white_ratio, (x) => m_white_ratio = x, 1.5f, 2.5f).SetEase(m_goal_white_curve).SetDelay(1.5f);
     }
 
     public void AddForceBgCube(Vector2 center_screen_pos, float power)
