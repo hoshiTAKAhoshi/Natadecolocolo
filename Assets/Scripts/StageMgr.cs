@@ -242,7 +242,7 @@ public class StageMgr : MonoBehaviour
         DOTween.To(() => m_bg_radius1, (x) => m_bg_radius1 = x, 60.0f, 0.74f).SetEase(Ease.OutExpo).SetDelay(0.25f);
 
         // BgCube白くする
-        DOTween.To(() => m_white_ratio, (x) => m_white_ratio = x, 1.5f, 2.5f).SetEase(m_goal_white_curve).SetDelay(1.5f);
+        DOTween.To(() => m_white_ratio, (x) => m_white_ratio = x, 1.3f, 2.5f).SetEase(m_goal_white_curve).SetDelay(1.9f);
     }
 
     public void AddForceBgCube(Vector2 center_screen_pos, float power)
