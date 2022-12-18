@@ -35,11 +35,11 @@ Shader "Custom/block"
         {
             Cull Back
 
-            Stencil{
-                Ref 2
-                Comp always
-                Pass replace
-            }
+            //Stencil{
+            //    Ref 2
+            //    Comp always
+            //    Pass replace
+            //}
             Tags { "LightMode"="ForwardBase" }
             CGPROGRAM
             #pragma vertex vert
@@ -145,11 +145,11 @@ Shader "Custom/block"
         {
             Cull Back
 
-            Stencil{
-                Ref 2
-                Comp always
-                Pass replace
-            }
+            //Stencil{
+            //    Ref 2
+            //    Comp always
+            //    Pass replace
+            //}
             Tags { "LightMode"="ForwardBase" }
             CGPROGRAM
             #pragma vertex vert

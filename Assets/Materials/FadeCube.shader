@@ -12,18 +12,20 @@ Shader "Custom/FadeCube"
     {
         Tags { "RenderType"="Opaque" }
         LOD 200
-
+        ZWrite Off
+        ZTest Always
+        Blend SrcAlpha OneMinusSrcAlpha
         // ï\ñ ï`âÊ2âÒñ⁄
         Pass
         {
-            Cull Back
+            Cull Front
 
             Stencil{
-                Ref 2
+                Ref 3
                 Comp always
                 Pass replace
             }
-            Tags { "Queue" = "Transparent" }
+            Tags {  "RenderType"="Transparent" "Queue" = "Transparent" }
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -54,16 +56,19 @@ Shader "Custom/FadeCube"
                 
                 float3 vWorld = mul(unity_ObjectToWorld,v.vertex);
                 fixed4 amp = mul(unity_WorldToObject,_Amplitude);
-                
-                // êÖïΩï˚å¸ÇÃóhÇÍ 
-                v.vertex.xyz += amp*(vWorld.y+0.5);
 
                 float4x4 mat = unity_ObjectToWorld;
                 float3 pos = float3(mat._m03,mat._m13,mat._m23);
+
+                float scaleY = length(float3(unity_ObjectToWorld[0].y, unity_ObjectToWorld[1].y, unity_ObjectToWorld[2].y));
+
+                // êÖïΩï˚å¸ÇÃóhÇÍ 
+                v.vertex.xyz += amp*(vWorld.y+0.5*scaleY);
+
                 
                 // ñcÇÁÇ›     
                 v.vertex.xyz = float3(v.vertex.x*(1+_Expansion),v.vertex.y*(1+_Expansion),v.vertex.z*(1+_Expansion));
-                float3 moveY = mul(unity_WorldToObject,float3(0,-_Amplitude.x*(vWorld.x-pos.x)-_Amplitude.z*(vWorld.z-pos.z),0)*(vWorld.y+0.5)+float3(0,_Expansion*0.5,0));
+                float3 moveY = mul(unity_WorldToObject,float3(0,-_Amplitude.x*(vWorld.x-pos.x)-_Amplitude.z*(vWorld.z-pos.z),0)*(vWorld.y+0.5*scaleY)+float3(0,_Expansion*0.5,0));
                 // êÇíºï˚å¸ÇÃóhÇÍ 
                 v.vertex.xyz += moveY;
 
@@ -87,40 +92,40 @@ Shader "Custom/FadeCube"
 
             half4 frag(v2f i, fixed facing : VFACE) : SV_Target
             {
-                float blur = _Blur;
-                blur = max(1, blur);
+                //float blur = _Blur;
+                //blur = max(1, blur);
 
-                fixed4 col = fixed4(0,0,0,0);
-                float weight_total = 0;
-                float4 local_pos = i.localPos;
-                half3 normal = i.normal;
+                //fixed4 col = fixed4(0,0,0,0);
+                //float weight_total = 0;
+                //float4 local_pos = i.localPos;
+                //half3 normal = i.normal;
 
-                for (float y = -blur; y <= blur; y += 1)
-                {
-                    float distance_normalized = abs(y/blur);
-                    float weight = exp(-0.5 * pow(distance_normalized, 2)*5);
-                    weight_total += weight;
-                    //col += tex2Dproj(_GrabTexture, i.grabPos + float4(0,y/**(5-abs(local_pos.x)*10)*/*_GrabTexture_TexelSize.y,0,0))*weight;
-                    col += tex2Dproj(_GrabTexture, i.grabPos + float4(0,y*_GrabTexture_TexelSize.y,0,0))*weight;
-                }
-                col /= weight_total;
-                //if(length(local_pos.xyz)>0.6)
-                //if(local_pos.x>0)
-                //    col = fixed4(1,1,1,1);
-                //half4 bgcolor = tex2Dproj(_GrabTexture, i.grabPos);
+                //for (float y = -blur; y <= blur; y += 1)
+                //{
+                //    float distance_normalized = abs(y/blur);
+                //    float weight = exp(-0.5 * pow(distance_normalized, 2)*5);
+                //    weight_total += weight;
+                //    //col += tex2Dproj(_GrabTexture, i.grabPos + float4(0,y/**(5-abs(local_pos.x)*10)*/*_GrabTexture_TexelSize.y,0,0))*weight;
+                //    col += tex2Dproj(_GrabTexture, i.grabPos + float4(0,y*_GrabTexture_TexelSize.y,0,0))*weight;
+                //}
+                //col /= weight_total;
+                ////if(length(local_pos.xyz)>0.6)
+                ////if(local_pos.x>0)
+                ////    col = fixed4(1,1,1,1);
+                ////half4 bgcolor = tex2Dproj(_GrabTexture, i.grabPos);
 
-                float len_from_center = saturate(length(local_pos.xyz)*0.9);
+                //float len_from_center = saturate(length(local_pos.xyz)*0.9);
 
-                fixed4 col_after_white = col*(1-len_from_center) + (len_from_center);
+                //fixed4 col_after_white = col*(1-len_from_center) + (len_from_center);
 
-                float shine_ratio = dot(normal, _LightDire)/2.0 +0.3;
-                fixed4 col_after_lighting = col_after_white - shine_ratio*_LightColor;
+                //float shine_ratio = dot(normal, _LightDire)/2.0 +0.3;
+                //fixed4 col_after_lighting = col_after_white - shine_ratio*_LightColor;
                 
-                return col_after_lighting;// * i.diff * SHADOW_ATTENUATION(i);
+                //return col_after_lighting;// * i.diff * SHADOW_ATTENUATION(i);
+                return fixed4(0.0f,1.0f,1.0f,0.0f);
             }
-
-
             ENDCG
-        }    }
-    FallBack "Diffuse"
+        }
+    }
+    //FallBack "Diffuse"
 }

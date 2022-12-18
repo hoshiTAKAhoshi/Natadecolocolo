@@ -157,7 +157,7 @@ public class Natadecoco : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(transform.position);
+        //Debug.Log(transform.position);
 
         // 現在の姿勢を計算、反映する
         CalcTransform();
