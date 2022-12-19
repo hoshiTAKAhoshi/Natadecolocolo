@@ -3422,7 +3422,7 @@ Transform:
   m_GameObject: {fileID: 1554353533}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.24, y: 0, z: -1.31}
-  m_LocalScale: {x: 1.67, y: 1.9204998, z: 1.67}
+  m_LocalScale: {x: 0.46, y: 0.529, z: 0.46}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2054489484}
@@ -4014,7 +4014,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: cd1c9f99a01d6dd459a9b98d0a8102fd, type: 2}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4457,6 +4457,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2054489484}
+  - component: {fileID: 2054489485}
   m_Layer: 0
   m_Name: FadeMgr
   m_TagString: Untagged
@@ -4481,6 +4482,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2054489485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054489483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a80d674248524e4a86e58d901f0decb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_fade_cube: {fileID: 1554353533}
+  m_fade_panel: {fileID: 1781668425}
 --- !u!1 &2127066342
 GameObject:
   m_ObjectHideFlags: 0
