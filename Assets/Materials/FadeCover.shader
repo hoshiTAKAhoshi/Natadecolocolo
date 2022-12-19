@@ -3,6 +3,7 @@ Shader "Custom/FadeCover"
     Properties
     {
         _Color ("Color", Color) = (1,1,1,1)
+        _Alpha ("Alpha", Float) = 1.0
     }
     SubShader
     {
@@ -42,10 +43,11 @@ Shader "Custom/FadeCover"
             }
 
             fixed4 _Color;
+            Float _Alpha;
 
             fixed4 frag(v2f i) : SV_Target
             {
-                return _Color;
+                return fixed4(_Color.r,_Color.g,_Color.b,_Alpha);
             }
             ENDCG
         }
