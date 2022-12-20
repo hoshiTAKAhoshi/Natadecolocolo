@@ -4495,7 +4495,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_cube: {fileID: 1554353533}
-  m_cuve_in_curve:
+  m_cube_in_curve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -4533,6 +4533,72 @@ MonoBehaviour:
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.11312792
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_cube_out_curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1.3518251
+      outSlope: 1.3518251
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.24400301
+    - serializedVersion: 3
+      time: 0.4502587
+      value: 0.25702524
+      inSlope: 0.16778284
+      outSlope: 0.16778284
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.11055301
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2.5899405
+      outSlope: 2.5899405
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.06294264
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_cube_rot_out_curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.31485748
+      value: 0.0921274
+      inSlope: 0.7627459
+      outSlope: 0.7627459
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.097671255
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1.6066988
+      outSlope: 1.6066988
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.07590385
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
