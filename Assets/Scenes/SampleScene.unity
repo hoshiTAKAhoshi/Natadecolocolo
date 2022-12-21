@@ -4542,22 +4542,22 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 1.3518251
-      outSlope: 1.3518251
+      value: -0.0021972656
+      inSlope: 0.2898308
+      outSlope: 0.2898308
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.24400301
+      outWeight: 0.1408904
     - serializedVersion: 3
-      time: 0.4502587
-      value: 0.25702524
-      inSlope: 0.16778284
-      outSlope: 0.16778284
+      time: 0.46756217
+      value: 0.15405893
+      inSlope: 0.6066324
+      outSlope: 0.6066324
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.11055301
+      outWeight: 0.10966414
     - serializedVersion: 3
       time: 1
       value: 1
@@ -4603,6 +4603,76 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  m_cube_pru_vec_out_curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: -0.5
+      inSlope: 11.707245
+      outSlope: 11.707245
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.08117222
+    - serializedVersion: 3
+      time: 0.16461045
+      value: 0.7419684
+      inSlope: 0.09908016
+      outSlope: 0.09908016
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.14868654
+    - serializedVersion: 3
+      time: 0.3035497
+      value: 0.36687353
+      inSlope: -0.53543174
+      outSlope: -0.53543174
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.31300893
+      outWeight: 0.17408963
+    - serializedVersion: 3
+      time: 0.47995418
+      value: 0.6038021
+      inSlope: 0.15443502
+      outSlope: 0.15443502
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.64737266
+      value: 0.39904588
+      inSlope: 0.067550234
+      outSlope: 0.067550234
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.164367
+    - serializedVersion: 3
+      time: 0.81177574
+      value: 0.5516091
+      inSlope: 0.21843627
+      outSlope: 0.21843627
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.34888557
+    - serializedVersion: 3
+      time: 1
+      value: 0.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_debug_time_scael: 1
   m_panel: {fileID: 1781668425}
 --- !u!1 &2127066342
 GameObject:
