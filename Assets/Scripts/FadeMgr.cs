@@ -86,7 +86,7 @@ public class FadeMgr : MonoBehaviour
     }
 
     // ‚Í‚¯‚é
-    public void FadeOutStart(float time = 0.7f)
+    public void FadeOutStart(float time = 0.8f)
     {
         Time.timeScale = m_debug_time_scael;
         Debug.Log("FadeOutStart()");
