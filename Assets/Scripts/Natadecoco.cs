@@ -62,6 +62,8 @@ public class Natadecoco : MonoBehaviour
 
     private float m_rot_time = 0.6f;                    // 回転する時間
     private Ease[] m_rot_ease = new Ease[2] { Ease.OutQuad, Ease.InQuad };
+    [SerializeField] private AnimationCurve m_curve_rot_normal;
+    [SerializeField] private AnimationCurve m_curve_rot_get_tama;
     private Vector3 m_rot = Vector3.zero;               // 回転開始から回転終了までの回転量
     private Vector3 m_fixed_rot = Vector3.zero;         // 回転終了して確定した回転量
     private Vector3 m_fixed_pos = Vector3.zero;         // 回転終了して確定した座標
@@ -260,13 +262,15 @@ public class Natadecoco : MonoBehaviour
             m_is_otto = false;
             if (m_to_pos.y != 0)
             {
-                m_seq_rot.Append(DOTween.To(() => m_rot.x, (x) => m_rot.x = x, m_rot.x - 45.0f * m_to_pos.y, m_rot_time / 2).SetEase(m_rot_ease[0]));
-                m_seq_rot.Append(DOTween.To(() => m_rot.x, (y) => m_rot.x = y, m_rot.x - 90.0f * m_to_pos.y, m_rot_time / 2).SetEase(m_rot_ease[1]).OnComplete(() => { m_state = NtdccState.ROT_FINISH; }));
+                //m_seq_rot.Append(DOTween.To(() => m_rot.x, (x) => m_rot.x = x, m_rot.x - 45.0f * m_to_pos.y, m_rot_time / 2).SetEase(m_rot_ease[0]));
+                //m_seq_rot.Append(DOTween.To(() => m_rot.x, (y) => m_rot.x = y, m_rot.x - 90.0f * m_to_pos.y, m_rot_time / 2).SetEase(m_rot_ease[1]).OnComplete(() => { m_state = NtdccState.ROT_FINISH; }));
+                m_seq_rot.Append(DOTween.To(() => m_rot.x, (y) => m_rot.x = y, m_rot.x - 90.0f * m_to_pos.y, m_rot_time).SetEase(m_curve_rot_normal).OnComplete(() => { m_state = NtdccState.ROT_FINISH; }));
             }
             else if (m_to_pos.x != 0)
             {
-                m_seq_rot.Append(DOTween.To(() => m_rot.z, (x) => m_rot.z = x, m_rot.z - 45.0f * m_to_pos.x, m_rot_time / 2).SetEase(m_rot_ease[0]));
-                m_seq_rot.Append(DOTween.To(() => m_rot.z, (y) => m_rot.z = y, m_rot.z - 90.0f * m_to_pos.x, m_rot_time / 2).SetEase(m_rot_ease[1]).OnComplete(() => { m_state = NtdccState.ROT_FINISH; }));
+                //m_seq_rot.Append(DOTween.To(() => m_rot.z, (x) => m_rot.z = x, m_rot.z - 45.0f * m_to_pos.x, m_rot_time / 2).SetEase(m_rot_ease[0]));
+                //m_seq_rot.Append(DOTween.To(() => m_rot.z, (y) => m_rot.z = y, m_rot.z - 90.0f * m_to_pos.x, m_rot_time / 2).SetEase(m_rot_ease[1]).OnComplete(() => { m_state = NtdccState.ROT_FINISH; }));
+                m_seq_rot.Append(DOTween.To(() => m_rot.z, (y) => m_rot.z = y, m_rot.z - 90.0f * m_to_pos.x, m_rot_time).SetEase(m_curve_rot_normal).OnComplete(() => { m_state = NtdccState.ROT_FINISH; }));
             }
         }
         else

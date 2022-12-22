@@ -113,6 +113,45 @@ MonoBehaviour:
   m_pref_distortion_eff: {fileID: 8280624331408386667, guid: 758a89792c79249909b8a0d8e7ca816e, type: 3}
   m_pref_nose: {fileID: 8429744550622637686, guid: fefcb1f237dda442d8b81b9741dc7f24, type: 3}
   m_pref_tama: {fileID: 8494192016374245880, guid: 7543cf5378a344b89b4eddfca290a925, type: 3}
+  m_curve_rot_normal:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2.6309385
+      outSlope: 2.6309385
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.21683966
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.5
+      inSlope: 0.119226605
+      outSlope: 0.119226605
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.1741637
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2.2740982
+      outSlope: 2.2740982
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.74971175
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_curve_rot_get_tama:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   m_otto_curve:
     serializedVersion: 2
     m_Curve:
