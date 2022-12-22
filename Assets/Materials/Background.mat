@@ -32,8 +32,9 @@ Material:
     - _Radius0: 46.6
     - _Radius1: 42.7
     - _Thickness: 0.1
+    - _WhiteRatio: 0
     m_Colors:
-    - _Color: {r: 0.352, g: 0.716, b: 0.749, a: 1}
+    - _Color: {r: 0.19411765, g: 0.73251945, b: 0.7764706, a: 1}
     - _NtdccPos: {r: 0, g: 0, b: 0, a: 1}
     - _NtdccScreenPos: {r: 1190.86, g: 680.4, b: 0, a: 1}
   m_BuildTextureStacks: []
