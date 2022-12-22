@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 public class Natadecoco : MonoBehaviour
@@ -260,17 +261,27 @@ public class Natadecoco : MonoBehaviour
         if (m_otto_obj == "")
         {
             m_is_otto = false;
+
+            string obj = m_stage_mgr.GetObjectData(m_pos_on_field + m_to_pos);
+            float rot_time = m_rot_time;
+            AnimationCurve curve = m_curve_rot_normal;
+            if(obj == "'")
+            {
+                rot_time = m_rot_time * 1.15f;
+                curve = m_curve_rot_get_tama;
+            }
+
             if (m_to_pos.y != 0)
             {
                 //m_seq_rot.Append(DOTween.To(() => m_rot.x, (x) => m_rot.x = x, m_rot.x - 45.0f * m_to_pos.y, m_rot_time / 2).SetEase(m_rot_ease[0]));
                 //m_seq_rot.Append(DOTween.To(() => m_rot.x, (y) => m_rot.x = y, m_rot.x - 90.0f * m_to_pos.y, m_rot_time / 2).SetEase(m_rot_ease[1]).OnComplete(() => { m_state = NtdccState.ROT_FINISH; }));
-                m_seq_rot.Append(DOTween.To(() => m_rot.x, (y) => m_rot.x = y, m_rot.x - 90.0f * m_to_pos.y, m_rot_time).SetEase(m_curve_rot_normal).OnComplete(() => { m_state = NtdccState.ROT_FINISH; }));
+                m_seq_rot.Append(DOTween.To(() => m_rot.x, (y) => m_rot.x = y, m_rot.x - 90.0f * m_to_pos.y, rot_time).SetEase(curve).OnComplete(() => { m_state = NtdccState.ROT_FINISH; }));
             }
             else if (m_to_pos.x != 0)
             {
                 //m_seq_rot.Append(DOTween.To(() => m_rot.z, (x) => m_rot.z = x, m_rot.z - 45.0f * m_to_pos.x, m_rot_time / 2).SetEase(m_rot_ease[0]));
                 //m_seq_rot.Append(DOTween.To(() => m_rot.z, (y) => m_rot.z = y, m_rot.z - 90.0f * m_to_pos.x, m_rot_time / 2).SetEase(m_rot_ease[1]).OnComplete(() => { m_state = NtdccState.ROT_FINISH; }));
-                m_seq_rot.Append(DOTween.To(() => m_rot.z, (y) => m_rot.z = y, m_rot.z - 90.0f * m_to_pos.x, m_rot_time).SetEase(m_curve_rot_normal).OnComplete(() => { m_state = NtdccState.ROT_FINISH; }));
+                m_seq_rot.Append(DOTween.To(() => m_rot.z, (y) => m_rot.z = y, m_rot.z - 90.0f * m_to_pos.x, rot_time).SetEase(curve).OnComplete(() => { m_state = NtdccState.ROT_FINISH; }));
             }
         }
         else

@@ -148,7 +148,52 @@ MonoBehaviour:
     m_RotationOrder: 4
   m_curve_rot_get_tama:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2.6309385
+      outSlope: 2.6309385
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.21683966
+    - serializedVersion: 3
+      time: 0.32780713
+      value: 0.45331675
+      inSlope: 0.3583975
+      outSlope: 0.3583975
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.34502137
+      value: 0.4550009
+      inSlope: 0.18434194
+      outSlope: 0.18434194
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.16827706
+    - serializedVersion: 3
+      time: 0.7210864
+      value: 0.57515347
+      inSlope: 0.42629698
+      outSlope: 0.42629698
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1738702
+      outWeight: 0.21474959
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2.7794511
+      outSlope: 2.7794511
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.18532002
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
