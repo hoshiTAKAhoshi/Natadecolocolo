@@ -65,6 +65,7 @@ public class Natadecoco : MonoBehaviour
     private Ease[] m_rot_ease = new Ease[2] { Ease.OutQuad, Ease.InQuad };
     [SerializeField] private AnimationCurve m_curve_rot_normal;
     [SerializeField] private AnimationCurve m_curve_rot_get_tama;
+    [SerializeField] private float m_debug_time_scale = 1.0f;
     private Vector3 m_rot = Vector3.zero;               // 回転開始から回転終了までの回転量
     private Vector3 m_fixed_rot = Vector3.zero;         // 回転終了して確定した回転量
     private Vector3 m_fixed_pos = Vector3.zero;         // 回転終了して確定した座標
@@ -265,9 +266,11 @@ public class Natadecoco : MonoBehaviour
             string obj = m_stage_mgr.GetObjectData(m_pos_on_field + m_to_pos);
             float rot_time = m_rot_time;
             AnimationCurve curve = m_curve_rot_normal;
+            Time.timeScale = 1.0f;
             if(obj == "'")
             {
-                rot_time = m_rot_time * 1.15f;
+                Time.timeScale = m_debug_time_scale;
+                rot_time = m_rot_time * 1.25f;
                 curve = m_curve_rot_get_tama;
             }
 

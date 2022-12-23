@@ -63,7 +63,7 @@ public class Tama : StageObjectBase
                 transform.position = new Vector3(tama_pos.x, amp * Mathf.Sin(m_yura_time), tama_pos.y);
                 break;
             case TamaMode.INSIDE:
-                //Debug.Log("inside");
+                Debug.Log("inside");
                 if (m_ntdcc)
                 {
                     transform.position = Vector3.Lerp(m_ntdcc.GetCenterPos(), transform.position, m_pos_lerp_ratio);
