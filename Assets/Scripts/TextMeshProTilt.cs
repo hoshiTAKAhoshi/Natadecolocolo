@@ -1,17 +1,28 @@
 using UnityEngine;
 using TMPro;
 using System.Globalization;
+using UnityEditor;
 
+[ExecuteInEditMode]//ExecuteInEditModeÇïtÇØÇÈéñÇ≈OnEnableÇ™çƒê∂ÇµÇƒÇ¢Ç»Ç≠ÇƒÇ‡é¿çsÇ≥ÇÍÇÈÇÊÇ§Ç…Ç»ÇÈ
 public class TextMeshProTilt : MonoBehaviour
 {
     [SerializeField] private float m_tilt;
     [SerializeField] private float m_add_height;
+    [SerializeField] private float m_add_width;
     private TMP_Text textComponent;
     //private TMP_TextInfo textInfo;
 
+    private void OnEnable()
+    {
+        if (this.textComponent == null)
+            this.textComponent = GetComponent<TMP_Text>();
+        UpdateAnimation();
+    }
+
     private void Start()
     {
-        this.textComponent = GetComponent<TMP_Text>();
+        if (this.textComponent == null)
+            this.textComponent = GetComponent<TMP_Text>();
 
         UpdateAnimation();
 
@@ -63,6 +74,11 @@ public class TextMeshProTilt : MonoBehaviour
             //verts[vertexIndex + 2].y += d + (verts[vertexIndex + 2].x - verts[vertexIndex + 0].x);
             //verts[vertexIndex + 3].y += d + (verts[vertexIndex + 3].x- verts[vertexIndex + 0].x);
             //Debug.Log(verts[vertexIndex + 0].x);
+
+            verts[vertexIndex + 0].x += (verts[vertexIndex + 0].x - verts[0].x) * m_add_width;
+            verts[vertexIndex + 1].x += (verts[vertexIndex + 1].x - verts[0].x) * m_add_width;
+            verts[vertexIndex + 2].x += (verts[vertexIndex + 2].x - verts[0].x) * m_add_width;
+            verts[vertexIndex + 3].x += (verts[vertexIndex + 3].x - verts[0].x) * m_add_width;
 
             verts[vertexIndex + 0].y += (verts[vertexIndex + 0].x - verts[0].x) * m_tilt;
             verts[vertexIndex + 1].y += (verts[vertexIndex + 1].x - verts[0].x) * m_tilt+ m_add_height;
