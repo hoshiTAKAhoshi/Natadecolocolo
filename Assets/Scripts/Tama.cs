@@ -38,10 +38,10 @@ public class Tama : StageObjectBase
                 m_yura_time += Time.deltaTime * m_yura_speed;
                 Vector2 tama_pos = new Vector2(m_pos_on_field.x, m_pos_on_field.y);
                 float amp = m_yura_amplitude;
-                //Vector2 tama_pos = new Vector2(transform.position.x, transform.position.z);
+                //Vector2 tama_pos = new Vector2(transform.localPosition.x, transform.localPosition.z);
                 if (m_ntdcc)
                 {
-                    Vector2 ntdcc_pos = new Vector2(m_ntdcc.transform.position.x,m_ntdcc.transform.position.z);
+                    Vector2 ntdcc_pos = new Vector2(m_ntdcc.transform.localPosition.x,m_ntdcc.transform.localPosition.z);
                     Vector2 diff = tama_pos - ntdcc_pos;
                     float mag_min = 0.6f;//ここまでなら近づける
                     if(diff.magnitude>0 && diff.magnitude<mag_min)
@@ -60,26 +60,26 @@ public class Tama : StageObjectBase
                     }
 
                 }
-                transform.position = new Vector3(tama_pos.x, amp * Mathf.Sin(m_yura_time), tama_pos.y);
+                transform.localPosition = new Vector3(tama_pos.x, amp * Mathf.Sin(m_yura_time)+0.5f, tama_pos.y);
                 break;
             case TamaMode.INSIDE:
-                Debug.Log("inside");
+                //Debug.Log("inside");
                 if (m_ntdcc)
                 {
-                    transform.position = Vector3.Lerp(m_ntdcc.GetCenterPos(), transform.position, m_pos_lerp_ratio);
+                    transform.localPosition = Vector3.Lerp(m_ntdcc.GetCenterPos(), transform.localPosition, m_pos_lerp_ratio);
                     transform.rotation = Quaternion.Slerp(m_ntdcc.GetRotation(), transform.rotation, 0.0f);
                 }
                 break;
             case TamaMode.SHOT:
-                transform.position += m_shot_dire * m_shot_speed * Time.deltaTime;
+                transform.localPosition += m_shot_dire * m_shot_speed * Time.deltaTime;
                 // 弾との衝突判定
-                m_pos_on_field = new Vector2Int(Mathf.RoundToInt(transform.position.x), -Mathf.RoundToInt(transform.position.z));
+                m_pos_on_field = new Vector2Int(Mathf.RoundToInt(transform.localPosition.x), -Mathf.RoundToInt(transform.localPosition.z));
                 //Debug.Log(m_stage_mgr);
                 //if (m_stage_mgr == null) Debug.Log("no_stage_mgr");
                 if (m_stage_mgr.GetObjectData(m_pos_on_field) == "E" && !m_is_hit)
                 {
-                    float x_in_tile = transform.position.x % 1;
-                    float y_in_tile = transform.position.y % 1;
+                    float x_in_tile = transform.localPosition.x % 1;
+                    float y_in_tile = transform.localPosition.y % 1;
                     if ((x_in_tile > 0.6f || x_in_tile < 0.4f) && (y_in_tile > 0.6f || y_in_tile < 0.4f))
                     {
                         m_is_hit = true;
@@ -114,18 +114,18 @@ public class Tama : StageObjectBase
             //transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
             m_pos_lerp_ratio = 1.0f;
             DOTween.To(() => m_pos_lerp_ratio, (x) => m_pos_lerp_ratio = x, 0.5f, 0.5f);
-            transform.position =
+            transform.localPosition =
                 new Vector3(
-                    m_pos_on_field.x + (transform.position.x - m_pos_on_field.x) * 1.0f,
-                    transform.position.y,
-                    m_pos_on_field.y + (transform.position.z - m_pos_on_field.y) * 1.0f
+                    m_pos_on_field.x + (transform.localPosition.x - m_pos_on_field.x) * 1.0f,
+                    transform.localPosition.y,
+                    m_pos_on_field.y + (transform.localPosition.z - m_pos_on_field.y) * 1.0f
                 );
         }
     }
 
     public void SetPosition(Vector3 pos)
     {
-        transform.position = pos;
+        transform.localPosition = pos;
     }
 
     public void SetShotDire(Vector3 dire)
@@ -165,10 +165,10 @@ public class Tama : StageObjectBase
             0.25f + Mathf.Abs(local_vec.y) * 0.2f,
             0.25f + Mathf.Abs(local_vec.z) * 0.2f
         ) ;
-        transform.position = new Vector3(
-            m_pos_on_field.x + (transform.position.x - m_pos_on_field.x) * 0.9f,
-            transform.position.y,
-            m_pos_on_field.y + (transform.position.z - m_pos_on_field.y) * 0.9f
+        transform.localPosition = new Vector3(
+            m_pos_on_field.x + (transform.localPosition.x - m_pos_on_field.x) * 0.9f,
+            transform.localPosition.y,
+            m_pos_on_field.y + (transform.localPosition.z - m_pos_on_field.y) * 0.9f
         );
 
         //if (vec.x != 0)

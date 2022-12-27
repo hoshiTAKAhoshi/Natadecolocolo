@@ -655,7 +655,7 @@ public class Natadecoco : MonoBehaviour
 
     public Vector3 GetCenterPos()
     {
-        return transform.position + GetPruVec()*0.7f;
+        return transform.localPosition + GetPruVec()*0.7f;
     }
 
     public Vector3 GetPruVec()

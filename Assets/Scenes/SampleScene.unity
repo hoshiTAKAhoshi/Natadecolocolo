@@ -1633,7 +1633,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_tilt: 0.772
   m_add_height: 10
-  m_add_width: 0
+  m_add_width: -0
 --- !u!222 &464506734
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5181,7 +5181,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: -7
+  m_characterSpacing: -12
   m_wordSpacing: 0
   m_lineSpacing: -32
   m_lineSpacingMax: 0
@@ -5235,7 +5235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_tilt: 0.772
   m_add_height: 8
-  m_add_width: 0.1
+  m_add_width: 0.2
 --- !u!1 &1991749785
 GameObject:
   m_ObjectHideFlags: 0
