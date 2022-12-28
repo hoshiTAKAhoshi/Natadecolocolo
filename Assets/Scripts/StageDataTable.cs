@@ -79,6 +79,47 @@ public class StageDataTable : MonoBehaviour
                 //new Vector3Int(0,0,-1),
             }
         ),
+        // ステージ2
+        new StageData
+        (
+            "はな が\nつっかえちゃう",5,
+            // フィールドデータ
+            new[]
+            {
+                "SQ'Q'Q OEQ",
+                " G' 'O'Q G",
+                " Q'Q'Q'Q"
+            },
+            // 鼻の向き
+            new[]
+            {
+                //new Vector3Int(0,1,0),
+                new Vector3Int(-1,0,0),
+                //new Vector3Int(0,0,1),
+                //new Vector3Int(0,0,-1),
+            }
+        ),
+        // ステージ3
+        new StageData
+        (
+            "ころがる",5,
+            // フィールドデータ
+            new[]
+            {
+                "SQ' 'Q OEQ",
+                " G' 'O'Q G",
+                " Q'Q'Q'Q"
+            },
+            // 鼻の向き
+            new[]
+            {
+                //new Vector3Int(0,1,0),
+                new Vector3Int(-1,0,0),
+                //new Vector3Int(0,0,1),
+                //new Vector3Int(0,0,-1),
+            }
+        ),
+
     };
 
     public string[,] m_stage_data_ =

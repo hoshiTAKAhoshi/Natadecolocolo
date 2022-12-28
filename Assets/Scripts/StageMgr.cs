@@ -42,7 +42,16 @@ public class StageMgr : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // ステージ遷移
+        // 前のステージ
+        if(Input.GetKeyDown(KeyCode.O))
+        {
+            DestroyStage();
+        }
+        // 次のステージ
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+        }
     }
 
     public void CreateStage(int stage_num)
@@ -122,6 +131,28 @@ public class StageMgr : MonoBehaviour
                 
             }
         }
+    }
+
+    public void DestroyStage()
+    {
+        foreach(var obj in m_floor_list.Values)
+        {
+            if (obj)
+                Destroy(obj.gameObject);
+        }
+        m_floor_data.Clear();
+        m_floor_list.Clear();
+
+        foreach(var flr in m_object_list.Values)
+        {
+            if (flr)
+                Destroy(flr.gameObject);
+        }
+        m_object_list.Clear();
+        m_object_data.Clear();
+
+        if(m_ntdcc)
+          Destroy(m_ntdcc.gameObject);
     }
 
     public string GetFloorData(Vector2Int pos)
@@ -208,13 +239,19 @@ public class StageMgr : MonoBehaviour
 
     public Vector3 GetNtdccPos()
     {
-        return m_ntdcc.transform.position;
+        if (m_ntdcc)
+            return m_ntdcc.transform.position;
+
+        return Vector3.zero;
     }
 
     public Vector3 GetNtdccScreenPos()
     {
         //Debug.Log(m_camera.WorldToScreenPoint(m_ntdcc.transform.position));
-        return m_camera.WorldToScreenPoint(m_ntdcc.transform.position);
+        if(m_ntdcc)
+            return m_camera.WorldToScreenPoint(m_ntdcc.transform.position);
+
+        return Vector3.zero;
     }
 
     public float GetBgRadius0()

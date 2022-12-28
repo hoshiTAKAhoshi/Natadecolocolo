@@ -39,11 +39,11 @@ public class FadeMgr : MonoBehaviour
     {
         //m_cube_material.SetVector("_Amplitude", new Vector4(0.3f, 0.0f, 0.0f, 0.0f));
         //m_panel_material.SetColor("_Color", Color.white);
-        if(Input.GetKeyDown(KeyCode.P))
+        if(Input.GetKeyDown(KeyCode.K))
         {
             FadeInStart();
         }
-        if(Input.GetKeyDown(KeyCode.O))
+        if(Input.GetKeyDown(KeyCode.L))
         {
             FadeOutStart();
         }
