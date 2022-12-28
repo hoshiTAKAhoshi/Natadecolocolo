@@ -19,7 +19,8 @@ public class Tama : StageObjectBase
     Vector3 m_shot_dire = Vector3.zero;
     float m_shot_speed = 4.0f;
 
-    float m_pos_lerp_ratio = 0.5f;
+    float m_pos_lerp_ratio = 0.9f;
+    float m_rot_lerp_ratio = 0.9f;
 
     private bool m_is_hit = false;
     
@@ -67,7 +68,7 @@ public class Tama : StageObjectBase
                 if (m_ntdcc)
                 {
                     transform.localPosition = Vector3.Lerp(m_ntdcc.GetCenterPos(), transform.localPosition, m_pos_lerp_ratio);
-                    transform.rotation = Quaternion.Slerp(m_ntdcc.GetRotation(), transform.rotation, 0.0f);
+                    transform.rotation = Quaternion.Slerp(m_ntdcc.GetRotation(), transform.rotation, m_rot_lerp_ratio);
                 }
                 break;
             case TamaMode.SHOT:
@@ -113,13 +114,17 @@ public class Tama : StageObjectBase
         {
             //transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
             m_pos_lerp_ratio = 1.0f;
-            DOTween.To(() => m_pos_lerp_ratio, (x) => m_pos_lerp_ratio = x, 0.5f, 0.5f);
+            DOTween.To(() => m_pos_lerp_ratio, (x) => m_pos_lerp_ratio = x, 0.75f, 0.9f);
+            m_rot_lerp_ratio = 1.0f;
+            DOTween.To(() => m_rot_lerp_ratio, (x) => m_rot_lerp_ratio = x, 0.5f, 0.2f).SetEase(Ease.InSine).SetDelay(0.2f);
             transform.localPosition =
                 new Vector3(
                     m_pos_on_field.x + (transform.localPosition.x - m_pos_on_field.x) * 1.0f,
                     transform.localPosition.y,
                     m_pos_on_field.y + (transform.localPosition.z - m_pos_on_field.y) * 1.0f
                 );
+            transform.rotation = m_ntdcc.GetFixedRotation();
+
         }
     }
 
@@ -157,13 +162,13 @@ public class Tama : StageObjectBase
     // ナタデココに取り込まれた時のスケールアニメーションを再生する
     public void PlayInsideScaleAnim(Vector2Int vec)
     {
-        transform.rotation = m_ntdcc.GetRotation();
+        transform.rotation = m_ntdcc.GetFixedRotation();
         //Vector3 local_vec = m_ntdcc.GetRotation() * new Vector3(vec.x, 0, vec.y);
         Vector3 local_vec = Quaternion.Inverse(transform.rotation) * new Vector3(vec.x, 0, vec.y);
         transform.localScale = new Vector3(
-            0.25f + Mathf.Abs(local_vec.x) * 0.2f,
-            0.25f + Mathf.Abs(local_vec.y) * 0.2f,
-            0.25f + Mathf.Abs(local_vec.z) * 0.2f
+            0.25f + Mathf.Abs(local_vec.x) * 0.14f,
+            0.25f + Mathf.Abs(local_vec.y) * 0.14f,
+            0.25f + Mathf.Abs(local_vec.z) * 0.14f
         ) ;
         transform.localPosition = new Vector3(
             m_pos_on_field.x + (transform.localPosition.x - m_pos_on_field.x) * 0.9f,

@@ -31,6 +31,8 @@ public class StageMgr : MonoBehaviour
     private float m_bg_radius1 = 0.0f;
     private float m_white_ratio = 0.0f;
 
+    private int m_now_stage_num = 0;    // 現在のステージnum
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,11 +48,16 @@ public class StageMgr : MonoBehaviour
         // 前のステージ
         if(Input.GetKeyDown(KeyCode.O))
         {
+            m_now_stage_num--;
             DestroyStage();
+            CreateStage(m_now_stage_num);
         }
         // 次のステージ
         if(Input.GetKeyDown(KeyCode.P))
         {
+            m_now_stage_num++;
+            DestroyStage();
+            CreateStage(m_now_stage_num);
         }
     }
 

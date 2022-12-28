@@ -67,6 +67,7 @@ public class Natadecoco : MonoBehaviour
     [SerializeField] private AnimationCurve m_curve_rot_get_tama;
     [SerializeField] private float m_debug_time_scale = 1.0f;
     private Vector3 m_rot = Vector3.zero;               // 回転開始から回転終了までの回転量
+    private Vector3 m_to_rot = Vector3.zero;               // 回転開始から回転終了までの回転量 向かう
     private Vector3 m_fixed_rot = Vector3.zero;         // 回転終了して確定した回転量
     private Vector3 m_fixed_pos = Vector3.zero;         // 回転終了して確定した座標
     private Vector2Int m_to_pos = Vector2Int.zero;      // 移動方向のベクトル
@@ -256,6 +257,7 @@ public class Natadecoco : MonoBehaviour
         }
 
         m_rot = Vector3.zero;
+        m_to_rot = Vector3.zero;
         m_seq_rot = DOTween.Sequence();
         m_state = NtdccState.ROTATING;
         m_otto_obj = CanMove(m_to_pos);
@@ -272,19 +274,22 @@ public class Natadecoco : MonoBehaviour
                 Time.timeScale = m_debug_time_scale;
                 rot_time = m_rot_time * 1.25f;
                 curve = m_curve_rot_get_tama;
+                Invoke("TakeInTamaInvoke", rot_time * 0.87f);
             }
 
             if (m_to_pos.y != 0)
             {
                 //m_seq_rot.Append(DOTween.To(() => m_rot.x, (x) => m_rot.x = x, m_rot.x - 45.0f * m_to_pos.y, m_rot_time / 2).SetEase(m_rot_ease[0]));
                 //m_seq_rot.Append(DOTween.To(() => m_rot.x, (y) => m_rot.x = y, m_rot.x - 90.0f * m_to_pos.y, m_rot_time / 2).SetEase(m_rot_ease[1]).OnComplete(() => { m_state = NtdccState.ROT_FINISH; }));
-                m_seq_rot.Append(DOTween.To(() => m_rot.x, (y) => m_rot.x = y, m_rot.x - 90.0f * m_to_pos.y, rot_time).SetEase(curve).OnComplete(() => { m_state = NtdccState.ROT_FINISH; }));
+                m_to_rot.x = m_rot.x - 90.0f * m_to_pos.y;
+                m_seq_rot.Append(DOTween.To(() => m_rot.x, (y) => m_rot.x = y, m_to_rot.x, rot_time).SetEase(curve).OnComplete(() => { m_state = NtdccState.ROT_FINISH; }));
             }
             else if (m_to_pos.x != 0)
             {
                 //m_seq_rot.Append(DOTween.To(() => m_rot.z, (x) => m_rot.z = x, m_rot.z - 45.0f * m_to_pos.x, m_rot_time / 2).SetEase(m_rot_ease[0]));
                 //m_seq_rot.Append(DOTween.To(() => m_rot.z, (y) => m_rot.z = y, m_rot.z - 90.0f * m_to_pos.x, m_rot_time / 2).SetEase(m_rot_ease[1]).OnComplete(() => { m_state = NtdccState.ROT_FINISH; }));
-                m_seq_rot.Append(DOTween.To(() => m_rot.z, (y) => m_rot.z = y, m_rot.z - 90.0f * m_to_pos.x, rot_time).SetEase(curve).OnComplete(() => { m_state = NtdccState.ROT_FINISH; }));
+                m_to_rot.z = m_rot.z - 90.0f * m_to_pos.x;
+                m_seq_rot.Append(DOTween.To(() => m_rot.z, (y) => m_rot.z = y, m_to_rot.z, rot_time).SetEase(curve).OnComplete(() => { m_state = NtdccState.ROT_FINISH; }));
             }
         }
         else
@@ -460,27 +465,47 @@ public class Natadecoco : MonoBehaviour
         switch (data)
         {
             case "'":
-                //Debug.Log("Tama");
-                //m_stage_mgr.TamaIntoNtdcc(m_pos_on_field, this);
-                if (!m_is_tama_inside)
-                {
-                    m_tama_inside = (Tama)m_stage_mgr.GetStageObject(m_pos_on_field);
-                    m_tama_inside.SetNatadecoco(this);
-                    m_tama_inside.SetMode(Tama.TamaMode.INSIDE);
-                    m_tama_inside.PlayInsideScaleAnim(m_to_pos);
-                    m_is_tama_inside = true;
-                    m_stage_mgr.ReplaceStageObjectData(m_pos_on_field, " ");
-                    //Debug.Log("yes");
-                }
-                else
-                {
-                    //zDebug.Log("no");
-                }
+                TakeInTama();
                 break;
             default:
                 break;
         }
         
+    }
+
+    void TakeInTama()
+    {
+        if (!m_is_tama_inside)
+        {
+            m_tama_inside = (Tama)m_stage_mgr.GetStageObject(m_pos_on_field);
+            m_tama_inside.SetNatadecoco(this);
+            m_tama_inside.SetMode(Tama.TamaMode.INSIDE);
+            m_tama_inside.PlayInsideScaleAnim(m_to_pos);
+            m_is_tama_inside = true;
+            m_stage_mgr.ReplaceStageObjectData(m_pos_on_field, " ");
+        }
+        else
+        {
+
+        }
+    }
+
+    // 弾取得カーブに合わせて、回転中に弾を取得する用
+    void TakeInTamaInvoke()
+    {
+        if (!m_is_tama_inside)
+        {
+            m_tama_inside = (Tama)m_stage_mgr.GetStageObject(m_pos_on_field + m_to_pos);
+            m_tama_inside.SetNatadecoco(this);
+            m_tama_inside.SetMode(Tama.TamaMode.INSIDE);
+            m_tama_inside.PlayInsideScaleAnim(m_to_pos);
+            m_is_tama_inside = true;
+            m_stage_mgr.ReplaceStageObjectData(m_pos_on_field + m_to_pos, " ");
+        }
+        else
+        {
+
+        }
     }
 
     // ゴールマスか調べる
@@ -666,6 +691,17 @@ public class Natadecoco : MonoBehaviour
     public Quaternion GetRotation()
     {
         return transform.rotation;
+    }
+
+    public Quaternion GetFixedRotation()
+    {
+        Quaternion q = Quaternion.Euler(m_fixed_rot);
+        Quaternion r = Quaternion.Euler(m_to_rot.x, m_to_rot.y, m_to_rot.z);
+
+        q *= Quaternion.Inverse(q) * r * q;
+
+        //q *= r;
+        return q;
     }
 
     // 0~1に変換
