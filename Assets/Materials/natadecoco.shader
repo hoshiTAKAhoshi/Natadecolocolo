@@ -15,7 +15,7 @@ Shader "Custom/natadecoco"
         // Draw after all opaque geometry
         Tags { "Queue" = "Transparent" }
         LOD 200
-        //ZWrite On
+        ZWrite Off
         //ZTest Always
         //#pragma target 3.0
         // Grab the screen behind the object into _GrabTexture
