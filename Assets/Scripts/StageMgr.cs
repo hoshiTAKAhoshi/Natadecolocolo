@@ -11,6 +11,7 @@ public class StageMgr : MonoBehaviour
     [SerializeField] private Natadecoco m_pref_ntdcc = null;
     [SerializeField] private Tama m_pref_tama = null;
     [SerializeField] private Block m_pref_block = null;
+    [SerializeField] private NoseAttach m_pref_nose_attach = null;
 
     [SerializeField] private Floor m_pref_floor = null;
     [SerializeField] private Floor m_pref_floor_hole = null;
@@ -98,6 +99,10 @@ public class StageMgr : MonoBehaviour
                             Block block = Instantiate(m_pref_block, new Vector3((int)(x / 2), -0.1f, -y), Quaternion.identity);
                             block.transform.parent = this.transform;
                             m_object_list.Add(new Vector2Int(x / 2, y), block);
+                            break;
+                        case "|":
+                            NoseAttach nose = Instantiate(m_pref_nose_attach, new Vector3((int)(x / 2), -0.5f, -y), Quaternion.identity);
+                            m_object_list.Add(new Vector2Int(x / 2, y), nose);
                             break;
                         default:
                             break;
