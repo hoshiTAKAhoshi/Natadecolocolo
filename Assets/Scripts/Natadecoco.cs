@@ -132,6 +132,7 @@ public class Natadecoco : MonoBehaviour
         m_otto_dict.Add("E", new Otto(m_otto_block_time, m_otto_block_curve));
         m_otto_dict.Add("'", new Otto(m_otto_tama_time, m_otto_tama_curve));
         m_otto_dict.Add("O", new Otto(m_otto_floor_time, m_otto_floor_curve));
+        m_otto_dict.Add("|", new Otto(m_otto_floor_time, m_otto_floor_curve));
 
         //Time.timeScale = 0.3f;
         //m_tama_inside = Instantiate(m_pref_tama);
@@ -465,7 +466,11 @@ public class Natadecoco : MonoBehaviour
         switch (data)
         {
             case "'":
-                TakeInTama();
+                // 回転終了時ではなく、回転途中で弾を取得するように変更
+                //TakeInTama();
+                break;
+            case "|":
+                AddNose();
                 break;
             default:
                 break;
@@ -488,6 +493,22 @@ public class Natadecoco : MonoBehaviour
         {
 
         }
+    }
+
+    void AddNose()
+    {
+        // 鼻を生成
+        Vector3Int nose_dire = new Vector3Int(0, -1, 0);
+        Nose nose = Instantiate(m_pref_nose, transform.position - (Vector3)nose_dire * 0.01f, Quaternion.FromToRotation(Vector3.up, nose_dire));
+        nose.transform.parent = this.transform;
+        nose.m_nose_dire_def = nose_dire;
+        nose.m_nose_dire = nose_dire;
+        m_nose_list.Add(nose);
+
+        NoseAttach nose_attach = (NoseAttach)m_stage_mgr.GetStageObject(m_pos_on_field);
+        nose_attach.AttachToNtdcc();
+        m_stage_mgr.ReplaceStageObjectData(m_pos_on_field, " ");
+
     }
 
     // 弾取得カーブに合わせて、回転中に弾を取得する用
@@ -586,18 +607,17 @@ public class Natadecoco : MonoBehaviour
     {
         //Debug.Log(dire);
         string floor = m_stage_mgr.GetFloorData(m_pos_on_field + dire);
+        string obj = m_stage_mgr.GetObjectData(m_pos_on_field + dire);
 
         // 弾が入ってて移動先が弾
-        if(m_is_tama_inside)
+        if (m_is_tama_inside)
         {
-            string obj = m_stage_mgr.GetObjectData(m_pos_on_field + dire);
             if (obj == "'")
                 return "'";
         }
 
         // ブロック
         {
-            string obj = m_stage_mgr.GetObjectData(m_pos_on_field + dire);
             if (obj == "E")
                 return "E";
 
@@ -611,6 +631,19 @@ public class Natadecoco : MonoBehaviour
                     //Debug.Log("nose:" + nose.m_nose_dire);
                     if (nose.m_nose_dire == new Vector3Int(dire.x, 0, -dire.y))
                         return "O"; // 鼻、移動先が穴なし床
+                }
+            }
+            else if(floor == "Q")
+            {
+                if(obj == "|")
+                {
+                    foreach (Nose nose in m_nose_list)
+                    {
+                        //Debug.Log("nose:" + nose.m_nose_dire);
+                        if (nose.m_nose_dire == new Vector3Int(dire.x, 0, -dire.y))
+                            return "|"; // 鼻、移動先が付け鼻
+                    }
+
                 }
             }
         }

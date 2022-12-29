@@ -15,4 +15,9 @@ public class NoseAttach : StageObjectBase
     {
         
     }
+
+    public void AttachToNtdcc()
+    {
+        Destroy(gameObject);
+    }
 }
