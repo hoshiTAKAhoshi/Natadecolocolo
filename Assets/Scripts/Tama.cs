@@ -36,7 +36,7 @@ public class Tama : StageObjectBase
         switch (m_mode)
         {
             case TamaMode.OBJECT:
-                m_yura_time += Time.deltaTime * m_yura_speed;
+                m_yura_time = Time.time * m_yura_speed;
                 Vector2 tama_pos = new Vector2(m_pos_on_field.x, m_pos_on_field.y);
                 float amp = m_yura_amplitude;
                 //Vector2 tama_pos = new Vector2(transform.localPosition.x, transform.localPosition.z);
@@ -124,8 +124,15 @@ public class Tama : StageObjectBase
                     m_pos_on_field.y + (transform.localPosition.z - m_pos_on_field.y) * 1.0f
                 );
             transform.rotation = m_ntdcc.GetFixedRotation();
-
         }
+        //else if (m_mode == TamaMode.OBJECT)
+        //{
+        //    m_yura_time = Time.time * m_yura_speed;
+        //    Vector2 tama_pos = new Vector2(m_pos_on_field.x, m_pos_on_field.y);
+        //    float amp = m_yura_amplitude;
+        //    transform.localPosition = new Vector3(tama_pos.x, amp * Mathf.Sin(m_yura_time) + 0.5f, tama_pos.y);
+
+        //}
     }
 
     public void SetPosition(Vector3 pos)

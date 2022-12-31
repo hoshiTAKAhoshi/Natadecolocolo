@@ -91,6 +91,7 @@ public class StageMgr : MonoBehaviour
                             tama.SetObjectType(StageObjectBase.ObjectType.TAMA);
                             tama.SetPosOnField(new Vector2Int(x / 2, -y));
                             tama.SetStageMgr(this);
+                            tama.SetMode(Tama.TamaMode.OBJECT);
                             tama.transform.parent = this.transform;
                             m_object_list.Add(new Vector2Int(x / 2, y), tama);
 
