@@ -101,7 +101,7 @@ public class StageMgr : MonoBehaviour
                             m_object_list.Add(new Vector2Int(x / 2, y), block);
                             break;
                         case "|":
-                            NoseAttach nose = Instantiate(m_pref_nose_attach, new Vector3((int)(x / 2), -0.5f, -y), Quaternion.identity);
+                            NoseAttach nose = Instantiate(m_pref_nose_attach, new Vector3((int)(x / 2), -0.46f, -y), Quaternion.identity);
                             m_object_list.Add(new Vector2Int(x / 2, y), nose);
                             break;
                         default:
