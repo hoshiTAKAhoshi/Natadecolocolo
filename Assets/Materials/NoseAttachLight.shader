@@ -53,7 +53,7 @@ Shader "Custom/NoseAttachLight"
             {
                 fixed4 col = fixed4(1,1,1,1);
                 col.a = saturate((0.13 - abs(i.local_pos.x+i.local_pos.z)*0.3) - (i.local_pos.y*(2)) + _AlphaOfs + 0.1*sin(_Time*40));
-                col.a += saturate(-pow(i.local_pos.y-_FlashOfs,2)*55 + 1.0 - i.local_pos.y * 3);
+                col.a += saturate(-pow(i.local_pos.y-(_FlashOfs-0.7),2)*25 + (3.8-_FlashOfs*4.8));
                 return col;
             }
             ENDCG

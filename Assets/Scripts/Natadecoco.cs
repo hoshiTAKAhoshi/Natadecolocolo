@@ -275,7 +275,7 @@ public class Natadecoco : MonoBehaviour
                 Time.timeScale = m_debug_time_scale;
                 rot_time = m_rot_time * 1.25f;
                 curve = m_curve_rot_get_tama;
-                Invoke("TakeInTamaInvoke", rot_time * 0.89f);
+                Invoke("TakeInTamaInvoke", rot_time * 0.9f);
             }
 
             if (m_to_pos.y != 0)
