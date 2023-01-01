@@ -32,8 +32,8 @@ public class NoseAttach : StageObjectBase
     public void AttachToNtdcc()
     {
         Destroy(m_nose.gameObject);
-        DOTween.To(() => m_light_alpha_ofs, (y) => m_light_alpha_ofs = y, -1.5f, 0.3f).SetEase(Ease.InCubic);
+        DOTween.To(() => m_light_alpha_ofs, (y) => m_light_alpha_ofs = y, -1.5f, 0.35f).SetEase(Ease.InCubic);
         m_light_flash_ofs = 0.0f;
-        DOTween.To(() => m_light_flash_ofs, (y) => m_light_flash_ofs = y, 0.79f, 0.5f).SetEase(Ease.OutExpo);
+        DOTween.To(() => m_light_flash_ofs, (y) => m_light_flash_ofs = y, 0.79f, 0.52f).SetEase(Ease.OutExpo);
     }
 }

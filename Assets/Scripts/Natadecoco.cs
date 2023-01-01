@@ -674,7 +674,7 @@ public class Natadecoco : MonoBehaviour
 
         // つぶす
         Vector3 up_vec = Vector3.up;
-        up_vec = transform.rotation * up_vec;
+        up_vec = Quaternion.Inverse(transform.rotation) * up_vec;
         Ease curve = Ease.OutSine;
         float ease_time = 1.7f;
         float delay_time = 0.3f;
@@ -700,7 +700,7 @@ public class Natadecoco : MonoBehaviour
         DOTween.To(() => m_goal_hight, (x) => m_goal_hight = x, 15.0f, 3.0f).SetEase(Ease.OutQuart);
 
         Vector3 up_vec = Vector3.up;
-        up_vec = transform.rotation * up_vec;
+        up_vec = Quaternion.Inverse(transform.rotation) * up_vec;
         Ease curve = Ease.OutCubic;
         float ease_time = 0.6f;
         float yoko = 0.9f;
