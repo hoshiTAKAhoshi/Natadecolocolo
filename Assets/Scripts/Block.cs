@@ -112,7 +112,6 @@ public class Block : StageObjectBase
             num_shuffle[i] = num_shuffle[j];
             num_shuffle[j] = tmp;
         }
-        int spawn_num = 6;
         float interval = 0.4f;
         for (int y = 0; y < 2; y++)
         {

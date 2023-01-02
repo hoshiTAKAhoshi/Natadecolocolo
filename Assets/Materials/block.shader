@@ -26,7 +26,7 @@ Shader "Custom/block"
 
         GrabPass
         {
-            //"_GrabTexture"
+            "_BlockGrabTexture"
         }
 
         // Render the object with the texture generated above, and invert the colors
@@ -106,7 +106,7 @@ Shader "Custom/block"
                 return o;
             }
 
-            sampler2D _GrabTexture;
+            sampler2D _BlockGrabTexture;
             fixed4 _GrabTexture_TexelSize;
             float _Blur;
 
@@ -127,19 +127,19 @@ Shader "Custom/block"
                     float distance_normalized = abs(x/blur);
                     float weight = exp(-0.5 * pow(distance_normalized, 2)*5);
                     weight_total += weight;
-                    col += tex2Dproj(_GrabTexture, i.grabPos + float4(x*_GrabTexture_TexelSize.x,0,0,0))*weight;
+                    col += tex2Dproj(_BlockGrabTexture, i.grabPos + float4(x*_GrabTexture_TexelSize.x,0,0,0))*weight;
                 }
                 col /= weight_total;
-                //half4 bgcolor = tex2Dproj(_GrabTexture, i.grabPos);
+                //half4 bgcolor = tex2Dproj(_BlockGrabTexture, i.grabPos);
                 return col;//* i.diff * SHADOW_ATTENUATION(i);
             }
             ENDCG
         }
         
-        GrabPass
-        {
-        //    "_GrabTexture"
-        }
+        //GrabPass
+        //{
+        ////    "_BlockGrabTexture"
+        //}
         // 表面描画2回目
         Pass
         {
@@ -213,7 +213,7 @@ Shader "Custom/block"
                 return o;
             }
 
-            sampler2D _GrabTexture;
+            sampler2D _BlockGrabTexture;
             fixed4 _GrabTexture_TexelSize;
             float _Blur;
             half3 _LightDire;
@@ -237,14 +237,14 @@ Shader "Custom/block"
                     float distance_normalized = abs(y/blur);
                     float weight = exp(-0.5 * pow(distance_normalized, 2)*5);
                     weight_total += weight;
-                    //col += tex2Dproj(_GrabTexture, i.grabPos + float4(0,y/**(5-abs(local_pos.x)*10)*/*_GrabTexture_TexelSize.y,0,0))*weight;
-                    col += tex2Dproj(_GrabTexture, i.grabPos + float4(0,y*_GrabTexture_TexelSize.y,0,0))*weight;
+                    //col += tex2Dproj(_BlockGrabTexture, i.grabPos + float4(0,y/**(5-abs(local_pos.x)*10)*/*_GrabTexture_TexelSize.y,0,0))*weight;
+                    col += tex2Dproj(_BlockGrabTexture, i.grabPos + float4(0,y*_GrabTexture_TexelSize.y,0,0))*weight;
                 }
                 col /= weight_total;
                 //if(length(local_pos.xyz)>0.6)
                 //if(local_pos.x>0)
                 //    col = fixed4(1,1,1,1);
-                //half4 bgcolor = tex2Dproj(_GrabTexture, i.grabPos);
+                //half4 bgcolor = tex2Dproj(_BlockGrabTexture, i.grabPos);
 
                 float len_from_center = saturate(length(local_pos.xyz)*0.9);
 
