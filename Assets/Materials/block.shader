@@ -343,7 +343,7 @@ Shader "Custom/block"
 
             fixed4 frag (v2f i) : SV_Target {
                 //if(_TransparentRatio>0)return;
-                SHADOW_CASTER_FRAGMENT(i*0)
+                SHADOW_CASTER_FRAGMENT(i)
             }
             ENDCG
         }

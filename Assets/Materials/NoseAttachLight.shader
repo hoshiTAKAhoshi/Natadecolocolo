@@ -7,7 +7,7 @@ Shader "Custom/NoseAttachLight"
     }
     SubShader
     {
-        Tags { "RenderType"="Transparent" "Queue" = "Transparent+1" }
+        Tags { "RenderType"="Transparent" "Queue" = "Transparent-1" }
         Blend SrcAlpha OneMinusSrcAlpha
         LOD 200
         ZWrite Off
