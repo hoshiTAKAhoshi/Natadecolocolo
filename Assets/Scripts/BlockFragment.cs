@@ -24,6 +24,14 @@ public class BlockFragment : MonoBehaviour
 
     void Awake()
     {
+
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        //Time.timeScale = 0.1f;
+
         m_rb = this.GetComponent<Rigidbody>();
         m_rdr = GetComponent<Renderer>();
         m_material = m_rdr.material;
@@ -33,17 +41,13 @@ public class BlockFragment : MonoBehaviour
         m_seq_white.Append(DOTween.To(() => m_white_ratio, (y) => m_white_ratio = y, 0.0f, 0.3f).SetEase(Ease.OutCubic));
 
         m_seq_scale = DOTween.Sequence();
-        m_seq_scale.Append(transform.DOScale(new Vector3(0.33f,0.33f,0.33f), 0.52f).SetEase(m_scale_curve));
+        m_seq_scale.Append(transform.DOScale(new Vector3(0.33f, 0.33f, 0.33f), 0.52f).SetEase(m_scale_curve));
         //transform.DOScale(Vector3.zero, 0.4f).SetDelay(0.3f + Random.Range(0.0f, 0.3f)).SetEase(Ease.InCubic);
-
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
+        
         float haba = 1.0f;
         Vector3 force = new Vector3(Random.Range(-1.0f, 1.0f) * haba / 2 + (m_ofs.x * 2 - 1) * haba, Random.Range(1.5f, 2.3f) * 1 + m_ofs.y * 2.0f, Random.Range(-1.0f, 1.0f) * haba / 2 + (m_ofs.z * 2 - 1) * haba);
-        force *= 0.8f;
+        //force = new Vector3(0, 3, 0);
+        force *= 0.6f;
         m_rb.AddForce(force, ForceMode.Impulse);
         float t = 15.0f;
         m_rb.maxAngularVelocity = t;
@@ -94,6 +98,7 @@ public class BlockFragment : MonoBehaviour
 
     public void OnCollisionStay(Collision other)
     {
+        //Debug.Log("Hit");
         if (m_rb.velocity.y <= 0 && m_is_brust == false&&other.gameObject.tag != "BlockFragment")
         {
             m_is_brust = true;

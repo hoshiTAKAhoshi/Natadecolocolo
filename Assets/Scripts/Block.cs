@@ -33,11 +33,15 @@ public class Block : StageObjectBase
     private float m_yure = 0.0f;
     private float m_yure_past = 0.0f;
     private Vector3 m_ntdcc_dire;
+
+    //private BoxCollider m_collider;
+
     // Start is called before the first frame update
     void Start()
     {
         SetObjectType(ObjectType.BLOCK);
         m_material = GetComponent<Renderer>().material;
+        //m_collider= GetComponent<BoxCollider>();
     }
 
     // Update is called once per frame
@@ -112,6 +116,9 @@ public class Block : StageObjectBase
             num_shuffle[i] = num_shuffle[j];
             num_shuffle[j] = tmp;
         }
+
+        //m_collider.enabled = false;
+
         float interval = 0.4f;
         for (int y = 0; y < 2; y++)
         {
@@ -121,7 +128,7 @@ public class Block : StageObjectBase
                 {
                     //if (Random.Range(0.0f, 1.0f) < 0.2f) continue;
                     //if (num_shuffle[x + y * 2 + z * 4] >= spawn_num) continue;
-                    BlockFragment frg = Instantiate(m_pref_block_fragment, transform.position + new Vector3((x - 0.5f) * interval, (y - 0.5f) * interval, (z - 0.5f) * interval), Quaternion.identity);
+                    BlockFragment frg = Instantiate(m_pref_block_fragment, transform.position + new Vector3((x - 0.5f) * interval, (y + 1.5f) * interval, (z - 0.5f) * interval), Quaternion.identity);
                     frg.SetOfset(new Vector3(x,y,z));
                 }
             }

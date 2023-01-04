@@ -66,17 +66,17 @@ public class StageDataTable : MonoBehaviour
             // フィールドデータ
             new[]
             {
-                "SQ'Q'Q OEQ",
-                " QEQ'O'Q G",
-                " Q'Q'Q|Q"
+                "EQEQEQEQEQ",
+                "'QEQ'Q'QEG",
+                "SQ'Q'Q'Q"
             },
             // 鼻の向き
             new[]
             {
                 //new Vector3Int(0,1,0),
                 new Vector3Int(-1,0,0),
-                //new Vector3Int(0,0,1),
-                //new Vector3Int(0,0,-1),
+                new Vector3Int(0,0,1),
+                new Vector3Int(0,0,-1),
             }
         ),
         // ステージ2
