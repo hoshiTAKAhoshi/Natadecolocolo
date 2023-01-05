@@ -9,20 +9,22 @@ public class TextMeshProTilt : MonoBehaviour
     [SerializeField] private float m_tilt;
     [SerializeField] private float m_add_height;
     [SerializeField] private float m_add_width;
-    private TMP_Text textComponent;
+
+    [SerializeField] private float m_chara_space = 0.0f;
+    private TMP_Text m_textComponent;
     //private TMP_TextInfo textInfo;
 
     private void OnEnable()
     {
-        if (this.textComponent == null)
-            this.textComponent = GetComponent<TMP_Text>();
+        if (this.m_textComponent == null)
+            this.m_textComponent = GetComponent<TMP_Text>();
         UpdateAnimation();
     }
 
     private void Start()
     {
-        if (this.textComponent == null)
-            this.textComponent = GetComponent<TMP_Text>();
+        if (this.m_textComponent == null)
+            this.m_textComponent = GetComponent<TMP_Text>();
 
         UpdateAnimation();
 
@@ -30,8 +32,8 @@ public class TextMeshProTilt : MonoBehaviour
 
     private void Update()
     {
-        if (this.textComponent == null)
-            this.textComponent = GetComponent<TMP_Text>();
+        if (this.m_textComponent == null)
+            this.m_textComponent = GetComponent<TMP_Text>();
 
         UpdateAnimation();
     }
@@ -39,8 +41,8 @@ public class TextMeshProTilt : MonoBehaviour
     private void UpdateAnimation()
     {
         // ① メッシュを再生成する（リセット）
-        this.textComponent.ForceMeshUpdate(true);
-        var textInfo = textComponent.textInfo;
+        this.m_textComponent.ForceMeshUpdate(true);
+        var textInfo = m_textComponent.textInfo;
 
         // ②頂点データを編集した配列の作成
         var count = Mathf.Min(textInfo.characterCount, textInfo.characterInfo.Length);
@@ -87,14 +89,15 @@ public class TextMeshProTilt : MonoBehaviour
 
         }
 
-        // ③ メッシュを更新
+        m_textComponent.characterSpacing = m_chara_space;
+        
         // ③ メッシュを更新
         for (int i = 0; i < textInfo.materialCount; i++)
         {
             if (textInfo.meshInfo[i].mesh == null) { continue; }
 
             textInfo.meshInfo[i].mesh.vertices = textInfo.meshInfo[i].vertices;  // 変更
-            textComponent.UpdateGeometry(textInfo.meshInfo[i].mesh, i);
+            m_textComponent.UpdateGeometry(textInfo.meshInfo[i].mesh, i);
         }
     }
 }
