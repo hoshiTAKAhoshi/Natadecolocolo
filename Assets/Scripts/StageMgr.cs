@@ -21,6 +21,8 @@ public class StageMgr : MonoBehaviour
 
     [SerializeField] private AnimationCurve m_goal_white_curve = null;
 
+    [SerializeField] private ClearText m_clear_text= null;
+
     private Natadecoco m_ntdcc;
     private List<string> m_floor_data = new List<string>();
     private Dictionary<Vector2Int, Floor> m_floor_list = new Dictionary<Vector2Int, Floor>();

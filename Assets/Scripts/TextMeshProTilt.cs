@@ -35,6 +35,8 @@ public class TextMeshProTilt : MonoBehaviour
         if (this.m_textComponent == null)
             this.m_textComponent = GetComponent<TMP_Text>();
 
+        m_textComponent.characterSpacing = m_chara_space;
+
         UpdateAnimation();
     }
 
