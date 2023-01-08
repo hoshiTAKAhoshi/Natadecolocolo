@@ -301,4 +301,9 @@ public class StageMgr : MonoBehaviour
     {
         m_bg_mgr.AddForceBgCube(center_screen_pos, power);
     }
+
+    public void PlayClearTextAnim()
+    {
+        m_clear_text.Play();
+    }
 }

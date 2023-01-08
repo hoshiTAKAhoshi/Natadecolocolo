@@ -709,6 +709,8 @@ public class Natadecoco : MonoBehaviour
         float sy = yoko - Mathf.Abs(up_vec.y) * (yoko - tate);
         float sz = yoko - Mathf.Abs(up_vec.z) * (yoko - tate);
         transform.DOScale(new Vector3(sx, sy, sz), ease_time).SetEase(curve);
+
+        m_stage_mgr.PlayClearTextAnim();
     }
 
     public Vector3 GetCenterPos()

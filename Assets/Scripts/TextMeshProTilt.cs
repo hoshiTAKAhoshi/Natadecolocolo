@@ -10,7 +10,7 @@ public class TextMeshProTilt : MonoBehaviour
     [SerializeField] private float m_add_height;
     [SerializeField] private float m_add_width;
 
-    [SerializeField] private float m_chara_space = 0.0f;
+    [SerializeField] private float m_chara_space;
     private TMP_Text m_textComponent;
     //private TMP_TextInfo textInfo;
 
@@ -35,7 +35,7 @@ public class TextMeshProTilt : MonoBehaviour
         if (this.m_textComponent == null)
             this.m_textComponent = GetComponent<TMP_Text>();
 
-        m_textComponent.characterSpacing = m_chara_space;
+        //m_textComponent.characterSpacing = m_chara_space;
 
         UpdateAnimation();
     }
@@ -101,5 +101,10 @@ public class TextMeshProTilt : MonoBehaviour
             textInfo.meshInfo[i].mesh.vertices = textInfo.meshInfo[i].vertices;  // ïœçX
             m_textComponent.UpdateGeometry(textInfo.meshInfo[i].mesh, i);
         }
+    }
+
+    public void SetCharSpace(float space)
+    {
+        m_chara_space = space;
     }
 }
