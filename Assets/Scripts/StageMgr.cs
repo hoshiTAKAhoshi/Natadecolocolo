@@ -66,6 +66,7 @@ public class StageMgr : MonoBehaviour
 
     public void CreateStage(int stage_num)
     {
+        m_clear_text.Init();
         StageDataTable.StageData stage_data = m_table.m_stage_data[stage_num];
         Debug.Log(stage_data.stage_name);
         for (int y = 0; y < stage_data.field_data.Length; y++)

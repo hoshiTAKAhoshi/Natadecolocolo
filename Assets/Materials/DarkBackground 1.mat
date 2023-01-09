@@ -34,7 +34,7 @@ Material:
     - _Thickness: 0.1
     - _WhiteRatio: 0
     m_Colors:
-    - _Color: {r: 0, g: 0.6362896, b: 0.689, a: 1}
+    - _Color: {r: 0, g: 0.59817004, b: 0.6901961, a: 1}
     - _NtdccPos: {r: 0, g: 0, b: 0, a: 1}
     - _NtdccScreenPos: {r: 1190.86, g: 680.4, b: 0, a: 1}
   m_BuildTextureStacks: []
