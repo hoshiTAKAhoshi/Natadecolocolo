@@ -37,11 +37,11 @@ public class ClearText : MonoBehaviour
         DOTween.To(() => m_char_space, (y) => m_char_space = y, -5, 1.3f).SetEase(Ease.OutExpo);
 
         m_text.transform.localScale = new Vector3(0.0f, 1.0f, 1.0f);
-        m_text.transform.DOScaleX(1.0f,1.0f).SetEase(Ease.OutExpo);
+        m_text.transform.DOScaleX(1.0f,1.0f).SetEase(Ease.OutQuint);
 
         //m_panel_scale_x = 0.0f;
         //DOTween.To(() => m_panel_scale_x, (y) => m_panel_scale_x = y, 1.3f, 1.3f).SetEase(Ease.OutExpo);
         m_panel.transform.localScale = new Vector3(0.0f, 1.0f, 0.13f);
-        m_panel.transform.DOScaleX(1.3f, 1.3f).SetEase(Ease.OutExpo);
+        m_panel.transform.DOScaleX(1.3f, 1.3f).SetEase(Ease.OutQuint);
     }
 }
